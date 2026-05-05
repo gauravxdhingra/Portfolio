@@ -1,3 +1,6 @@
+import CaseStudyExplorer from "./CaseStudyExplorer";
+import SkillsExplorer from "./SkillsExplorer";
+
 const metrics = [
   { value: "5", label: "years in fintech quality engineering" },
   { value: "20+", label: "cross-functional teams supported" },
@@ -7,24 +10,34 @@ const metrics = [
 
 const skillGroups = [
   {
+    title: "Programming Languages",
+    items: ["Java", "Python", "JavaScript"],
+    summary: "The core languages behind my automation, integration testing, and internal tooling work.",
+  },
+  {
     title: "Automation",
     items: ["Playwright", "Robot Framework", "Selenium", "BDD / Cucumber", "TestNG", "JUnit", "Pytest"],
+    summary: "Browser automation and reusable test design for UI workflows that need to stay stable in CI and meaningful to product teams.",
   },
   {
     title: "Backend & API",
     items: ["REST APIs", "RestAssured", "Kafka", "Microservices", "Async Workflows", "Event-Driven Systems", "Contract Testing"],
+    summary: "Most of my depth is in backend and integration quality where financial workflows cross service boundaries and timing matters.",
   },
   {
     title: "Reliability",
     items: ["Load & Stress Testing", "JMeter", "Resilience Testing", "Chaos Engineering", "Recovery Scenarios", "Failover Validation", "SLA / SLO Testing"],
+    summary: "I focus on the failure-heavy parts of systems: performance pressure, recovery paths, degraded behavior, and resilience validation.",
   },
   {
     title: "Observability",
     items: ["Elasticsearch", "OpenSearch", "Kibana", "Grafana", "Log Analysis", "Distributed Tracing", "Alerting & Dashboards", "SQL", "NoSQL"],
+    summary: "Diagnosis matters as much as detection. I rely on logs, traces, dashboards, and data inspection to turn failures into useful signal.",
   },
   {
     title: "Tooling & CI/CD",
     items: ["AI", "Jenkins", "Git", "Docker", "Kubernetes", "Maven", "Postman", "Linux / Shell", "Jira", "AWS"],
+    summary: "I build around delivery systems, not outside them, so automation can run reliably where release decisions are actually made.",
   },
   {
     title: "FinTech",
@@ -41,6 +54,7 @@ const skillGroups = [
       "Cash Position",
       "Bank Account Management",
     ],
+    summary: "My strongest domain context is in treasury and financial messaging, where workflow correctness and operational confidence are non-negotiable.",
   },
 ];
 
@@ -48,6 +62,7 @@ const caseStudies = [
   {
     eyebrow: "Automation Architecture",
     title: "Backend and API automation for distributed financial workflows",
+    summary: "Reusable automation across REST, async, and queue-driven workflows for earlier signal on settlement and reconciliation risk.",
     body:
       "I built Python-based Robot Framework automation that validated REST, async, and queue-driven flows against a Java-centric platform, giving teams earlier signal on settlement and reconciliation risk.",
     impact: "Shift-left coverage across backend and integration layers",
@@ -55,6 +70,7 @@ const caseStudies = [
   {
     eyebrow: "UI Modernization",
     title: "Playwright-based UI automation for modern platform workflows",
+    summary: "Playwright coverage for modern UI flows without turning browser automation into a maintenance burden.",
     body:
       "I built Playwright coverage for modern platform workflows and integrated it into the broader automation strategy so UI validation stayed fast, maintainable, and production-relevant.",
     impact: "Modern UI coverage built around Playwright",
@@ -62,6 +78,7 @@ const caseStudies = [
   {
     eyebrow: "Reliability Engineering",
     title: "Resilience tests for async services and recovery behavior",
+    summary: "State-of-health and recovery validation focused on isolating environment, data, and configuration-driven failures.",
     body:
       "I designed state-of-health tests for services, daemons, and databases, then used disciplined scenario design to isolate environment, data, and configuration failures.",
     impact: "Component failure rate reduced from 25% to under 2%",
@@ -69,6 +86,7 @@ const caseStudies = [
   {
     eyebrow: "Performance",
     title: "CI-integrated performance testing with generated test data",
+    summary: "Performance coverage shaped around realistic execution flows, backed by faster test-data generation.",
     body:
       "I built performance test coverage around realistic execution flows, automated the supporting test data pipeline, and used the results to expose bottlenecks across memory pressure, DB latency, and lock contention.",
     impact: "3-5x faster test data generation and 40% shorter execution time",
@@ -76,6 +94,7 @@ const caseStudies = [
   {
     eyebrow: "Quality Ops",
     title: "Release visibility dashboard replacing manual reporting",
+    summary: "Internal tooling that gave release stakeholders environment readiness signal without manual status collection.",
     body:
       "I built a React and Node.js dashboard integrating Jenkins and Azure Graph APIs so release stakeholders could see environment readiness without manual status collection.",
     impact: "Replaced countless manual processes through internal tooling",
@@ -83,9 +102,9 @@ const caseStudies = [
 ];
 
 const experienceBullets = [
-  "I lead quality strategy across backend, API, and integration layers for regulated fintech systems where correctness, timing, and resilience matter as much as feature coverage.",
-  "I build automation that engineers can trust: stable enough for CI, expressive enough for business workflows, and diagnostic enough to speed up the right fixes.",
-  "I am strongest in the failure-heavy parts of the stack: async workflows, recovery scenarios, environment drift, performance bottlenecks, and release-readiness visibility.",
+  "I lead backend and integration quality for regulated fintech systems where correctness, timing, and resilience matter as much as feature coverage.",
+  "I build automation that is stable in CI, expressive for business workflows, and diagnostic enough to speed up the right fixes.",
+  "I do my best work around async failures, recovery paths, environment drift, performance bottlenecks, and release-readiness signal.",
 ];
 
 const links = {
@@ -132,7 +151,7 @@ export default function Home() {
               I build quality systems for fintech platforms where failure is expensive.
             </h1>
             <p className="reveal reveal-delay-2 mt-7 max-w-3xl text-lg leading-8 text-muted sm:text-xl">
-              I specialize in backend, API, and UI automation for regulated financial workflows, with deep experience in CI/CD test infrastructure, reliability engineering, and release readiness.
+              Backend, API, and UI automation for regulated financial workflows, with deep focus on reliability, CI quality gates, and release readiness.
             </p>
             <div className="reveal reveal-delay-3 mt-9 flex flex-col gap-3 sm:flex-row">
               <a className="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-slateblue" href={links.email}>
@@ -169,23 +188,10 @@ export default function Home() {
               <h2 className="mt-3 font-display text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">Automation, reliability, and release signal.</h2>
             </div>
             <p className="max-w-xl text-muted">
-              My work sits between engineering velocity and operational risk: enough business context to test the right thing, enough technical depth to make the signal trustworthy.
+              Scan the broad areas first, then drill into the stack where you want more depth.
             </p>
           </div>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {skillGroups.map((group) => (
-              <article key={group.title} className="rounded-[1.5rem] border border-ink/10 bg-white/45 p-5 backdrop-blur">
-                <h3 className="font-display text-2xl font-semibold tracking-[-0.03em]">{group.title}</h3>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {group.items.map((item) => (
-                    <span key={item} className="rounded-full border border-ink/10 bg-white/60 px-3 py-1 text-sm text-muted">
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </article>
-            ))}
-          </div>
+          <SkillsExplorer groups={skillGroups} />
         </section>
 
         <section id="work" className="py-16 sm:py-20">
@@ -193,21 +199,7 @@ export default function Home() {
             <p className="text-sm font-semibold uppercase tracking-[0.26em] text-signal">Selected case studies</p>
             <h2 className="mt-3 font-display text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">Sanitized examples of enterprise work.</h2>
           </div>
-          <div className="grid gap-5 lg:grid-cols-2">
-            {caseStudies.map((study, index) => (
-              <article key={study.title} className={`rounded-[1.75rem] border border-ink/10 bg-white/55 p-6 shadow-sm backdrop-blur ${index === 4 ? "lg:col-span-2" : ""}`}>
-                <div className="mb-5 flex items-center gap-3">
-                  <span className="h-px w-10 bg-brass" />
-                  <p className="text-xs font-bold uppercase tracking-[0.22em] text-muted">{study.eyebrow}</p>
-                </div>
-                <h3 className="font-display text-3xl font-semibold leading-tight tracking-[-0.04em]">{study.title}</h3>
-                <p className="mt-4 leading-7 text-muted">{study.body}</p>
-                <p className="mt-5 rounded-2xl border border-signal/15 bg-signal/10 px-4 py-3 text-sm font-semibold text-signal">
-                  {study.impact}
-                </p>
-              </article>
-            ))}
-          </div>
+          <CaseStudyExplorer studies={caseStudies} />
         </section>
 
         <section className="grid gap-8 rounded-[2rem] border border-ink/10 bg-ink p-6 text-white shadow-panel sm:p-8 lg:grid-cols-[0.85fr_1.15fr] lg:p-10">
@@ -215,11 +207,12 @@ export default function Home() {
             <p className="text-sm font-semibold uppercase tracking-[0.26em] text-brass">Experience snapshot</p>
             <h2 className="mt-3 font-display text-4xl font-semibold tracking-[-0.04em]">Fintech QA engineering for platforms with real operational stakes.</h2>
           </div>
-          <div className="space-y-4">
-            {experienceBullets.map((bullet) => (
-              <p key={bullet} className="rounded-2xl border border-white/10 bg-white/7 p-4 leading-7 text-white/78">
-                {bullet}
-              </p>
+          <div className="grid gap-4 md:grid-cols-3">
+            {experienceBullets.map((bullet, index) => (
+              <div key={bullet} className="rounded-2xl border border-white/10 bg-white/7 p-4">
+                <p className="text-xs font-bold uppercase tracking-[0.22em] text-brass/80">0{index + 1}</p>
+                <p className="mt-3 leading-7 text-white/78">{bullet}</p>
+              </div>
             ))}
           </div>
         </section>
