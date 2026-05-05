@@ -101,12 +101,6 @@ const caseStudies = [
   },
 ];
 
-const experienceBullets = [
-  "I lead backend and integration quality for regulated fintech systems where correctness, timing, and resilience matter as much as feature coverage.",
-  "I build automation that is stable in CI, expressive for business workflows, and diagnostic enough to speed up the right fixes.",
-  "I do my best work around async failures, recovery paths, environment drift, performance bottlenecks, and release-readiness signal.",
-];
-
 const links = {
   email: "mailto:grvdhingra1999@gmail.com",
   linkedin: "https://www.linkedin.com/in/gauravxdhingra/",
@@ -200,21 +194,6 @@ export default function Home() {
             <h2 className="mt-3 font-display text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">Sanitized examples of enterprise work.</h2>
           </div>
           <CaseStudyExplorer studies={caseStudies} />
-        </section>
-
-        <section className="grid gap-8 rounded-[2rem] border border-ink/10 bg-ink p-6 text-white shadow-panel sm:p-8 lg:grid-cols-[0.85fr_1.15fr] lg:p-10">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.26em] text-brass">Experience snapshot</p>
-            <h2 className="mt-3 font-display text-4xl font-semibold tracking-[-0.04em]">Fintech QA engineering for platforms with real operational stakes.</h2>
-          </div>
-          <div className="grid gap-4 md:grid-cols-3">
-            {experienceBullets.map((bullet, index) => (
-              <div key={bullet} className="rounded-2xl border border-white/10 bg-white/7 p-4">
-                <p className="text-xs font-bold uppercase tracking-[0.22em] text-brass/80">0{index + 1}</p>
-                <p className="mt-3 leading-7 text-white/78">{bullet}</p>
-              </div>
-            ))}
-          </div>
         </section>
 
         <section id="contact" className="py-16 sm:py-20">
