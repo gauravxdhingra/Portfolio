@@ -1,6 +1,6 @@
 # Gaurav Dhingra Portfolio
 
-One-page portfolio website for a fintech-focused Senior QA Engineer / SDET, built with Next.js, TypeScript, and Tailwind CSS.
+Have a look: https://gauravdhingra.vercel.app
 
 ## Stack
 
