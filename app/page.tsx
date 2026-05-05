@@ -1,34 +1,46 @@
 const metrics = [
-  { value: "4.5+", label: "years in fintech quality engineering" },
+  { value: "5", label: "years in fintech quality engineering" },
   { value: "20+", label: "cross-functional teams supported" },
-  { value: "30%", label: "regression cycle reduction delivered" },
+  { value: "30%", label: "reduced regression test time" },
   { value: "<1%", label: "nightly automation flake rate maintained" },
 ];
 
 const skillGroups = [
   {
     title: "Automation",
-    items: ["Robot Framework", "BDD/Cucumber", "TestNG", "JUnit", "Pytest", "Selenium", "Playwright", "Appium", "POM"],
+    items: ["Playwright", "Robot Framework", "Selenium", "BDD / Cucumber", "TestNG", "JUnit", "Pytest"],
   },
   {
     title: "Backend & API",
-    items: ["REST APIs", "RestAssured", "Kafka", "microservices", "async workflows", "event-driven systems"],
+    items: ["REST APIs", "RestAssured", "Kafka", "Microservices", "Async Workflows", "Event-Driven Systems", "Contract Testing"],
   },
   {
     title: "Reliability",
-    items: ["JMeter", "load testing", "resilience testing", "recovery validation", "RCA", "startup sequencing"],
-  },
-  {
-    title: "Tooling",
-    items: ["Jenkins", "Git", "Linux", "Shell", "Postman", "Maven", "Docker", "Kubernetes", "Jira"],
-  },
-  {
-    title: "Fintech Domain",
-    items: ["SWIFT MT/MX", "ISO 20022", "CBPR+", "SEPA", "cash management", "liquidity", "settlements"],
+    items: ["Load & Stress Testing", "JMeter", "Resilience Testing", "Chaos Engineering", "Recovery Scenarios", "Failover Validation", "SLA / SLO Testing"],
   },
   {
     title: "Observability",
-    items: ["SQL", "NoSQL", "Elasticsearch", "OpenSearch", "Kibana", "Grafana", "diagnostics"],
+    items: ["Elasticsearch", "OpenSearch", "Kibana", "Grafana", "Log Analysis", "Distributed Tracing", "Alerting & Dashboards", "SQL", "NoSQL"],
+  },
+  {
+    title: "Tooling & CI/CD",
+    items: ["AI", "Jenkins", "Git", "Docker", "Kubernetes", "Maven", "Postman", "Linux / Shell", "Jira", "AWS"],
+  },
+  {
+    title: "FinTech",
+    items: [
+      "Treasury",
+      "Financial Messaging (SWIFT MT/MX, ISO 20022, CBPR+, SEPA)",
+      "Trade and Risk Management",
+      "FX & OTC",
+      "Cash Management",
+      "Liquidity",
+      "Settlements",
+      "Reconciliation",
+      "Accounting",
+      "Cash Position",
+      "Bank Account Management",
+    ],
   },
 ];
 
@@ -42,10 +54,10 @@ const caseStudies = [
   },
   {
     eyebrow: "UI Modernization",
-    title: "Modern browser automation without abandoning legacy coverage",
+    title: "Playwright-based UI automation for modern platform workflows",
     body:
-      "I introduced Playwright alongside Selenium to cover modern platform flows while keeping legacy web modules stable inside the core automation framework.",
-    impact: "Unified UI automation across old and new workflows",
+      "I built Playwright coverage for modern platform workflows and integrated it into the broader automation strategy so UI validation stayed fast, maintainable, and production-relevant.",
+    impact: "Modern UI coverage built around Playwright",
   },
   {
     eyebrow: "Reliability Engineering",
@@ -58,22 +70,22 @@ const caseStudies = [
     eyebrow: "Performance",
     title: "CI-integrated performance testing with generated test data",
     body:
-      "I rebuilt fragmented performance checks into Jenkins executions with automated data generation, improving test data speed and surfacing bottlenecks across memory, DB latency, and lock contention.",
-    impact: "3-5x faster data generation and 40% shorter execution time",
+      "I built performance test coverage around realistic execution flows, automated the supporting test data pipeline, and used the results to expose bottlenecks across memory pressure, DB latency, and lock contention.",
+    impact: "3-5x faster test data generation and 40% shorter execution time",
   },
   {
     eyebrow: "Quality Ops",
     title: "Release visibility dashboard replacing manual reporting",
     body:
       "I built a React and Node.js dashboard integrating Jenkins and Azure Graph APIs so release stakeholders could see environment readiness without manual status collection.",
-    impact: "Replaced a 20-minute manual EOD reporting process",
+    impact: "Replaced countless manual processes through internal tooling",
   },
 ];
 
 const experienceBullets = [
-  "I own backend, API, and integration quality for regulated fintech platforms spanning payments, treasury, cash management, liquidity, FX, settlements, and reconciliation.",
-  "I design BDD-driven automation that fits CI pipelines and gives engineers useful failure diagnostics instead of noisy pass/fail reports.",
-  "I work closest to reliability problems: flaky tests, distributed startup order, recovery behavior, test data bottlenecks, and release readiness visibility.",
+  "I lead quality strategy across backend, API, and integration layers for regulated fintech systems where correctness, timing, and resilience matter as much as feature coverage.",
+  "I build automation that engineers can trust: stable enough for CI, expressive enough for business workflows, and diagnostic enough to speed up the right fixes.",
+  "I am strongest in the failure-heavy parts of the stack: async workflows, recovery scenarios, environment drift, performance bottlenecks, and release-readiness visibility.",
 ];
 
 const links = {
@@ -134,7 +146,7 @@ export default function Home() {
 
           <aside className="reveal reveal-delay-2 rounded-[2rem] border border-ink/10 bg-panel p-5 shadow-panel backdrop-blur">
             <div className="rounded-[1.5rem] border border-ink/10 bg-ledger-grid bg-[length:34px_34px] p-5">
-              <div className="mb-8 flex items-center justify-between border-b border-ink/10 pb-4">
+              <div className="mb-6 flex items-center justify-between border-b border-ink/10 pb-4">
                 <span className="text-xs font-bold uppercase tracking-[0.24em] text-muted">Quality Ledger</span>
                 <span className="rounded-full bg-signal/10 px-3 py-1 text-xs font-bold text-signal">Live systems mindset</span>
               </div>
