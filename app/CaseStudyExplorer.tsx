@@ -14,6 +14,187 @@ type CaseStudyExplorerProps = {
   studies: CaseStudy[];
 };
 
+function CaseStudyVisual({ eyebrow }: { eyebrow: string }) {
+  const visuals: Record<string, React.ReactNode> = {
+    "Automation Architecture": (
+      <div className="space-y-4">
+        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
+          Layered Test Coverage
+        </p>
+        <div className="space-y-2">
+          {[
+            { layer: "Business Logic", tech: "REST APIs", color: "bg-signal/15" },
+            { layer: "Async Workers", tech: "Kafka, Queues", color: "bg-brass/15" },
+            { layer: "State Validation", tech: "Durable State", color: "bg-ink/8" },
+          ].map((item, i) => (
+            <div key={item.layer} className="flex items-center gap-3">
+              <div className={`h-12 w-1 rounded-full ${item.color}`} />
+              <div className="flex-1">
+                <p className="text-xs font-semibold text-ink">{item.layer}</p>
+                <p className="mt-0.5 text-[11px] text-muted">{item.tech}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="mt-3 rounded-lg border border-signal/20 bg-signal/8 p-3">
+          <p className="text-[11px] font-semibold text-signal">
+            Reusable keywords → earlier signal on reconciliation risk
+          </p>
+        </div>
+      </div>
+    ),
+    "UI Modernization": (
+      <div className="space-y-4">
+        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
+          Playwright Test Flow
+        </p>
+        <div className="flex items-center gap-1">
+          {[
+            { step: "Login", pct: 100 },
+            { step: "Search", pct: 95 },
+            { step: "Action", pct: 92 },
+            { step: "Verify", pct: 88 },
+          ].map((item) => (
+            <div key={item.step} className="flex-1">
+              <div className="flex h-16 flex-col items-center justify-between">
+                <div
+                  className="w-full rounded-t-lg border-x border-t border-ink/10 bg-signal/12"
+                  style={{ height: `${item.pct * 0.12}px` }}
+                />
+                <div className="h-5 w-full border border-ink/10 rounded-b-lg bg-white/60 flex items-center justify-center">
+                  <p className="text-[9px] font-semibold text-muted">{item.step}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="mt-3 rounded-lg border border-signal/20 bg-signal/8 p-3">
+          <p className="text-[11px] font-semibold text-signal">
+            Stable selectors + trace debugging = production-ready coverage
+          </p>
+        </div>
+      </div>
+    ),
+    "Reliability Engineering": (
+      <div className="space-y-4">
+        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
+          Recovery Validation Matrix
+        </p>
+        <div className="grid grid-cols-[1fr_0.9fr_0.9fr_0.9fr] gap-2">
+          <div className="rounded-lg bg-ink px-2 py-2 text-[11px] font-bold text-white">
+            Component
+          </div>
+          {["Restart", "Failover", "Data Drift"].map((header) => (
+            <div key={header} className="rounded-lg bg-ink px-2 py-2 text-center text-[10px] font-bold text-white">
+              {header}
+            </div>
+          ))}
+          {[
+            ["Service", "✓", "✓", "—"],
+            ["Daemon", "✓", "✓", "✓"],
+            ["Database", "⚠", "✓", "✓"],
+          ].map((row, i) => (
+            <div key={i} className="contents">
+              <div className="rounded-lg border border-ink/10 bg-white/60 px-2 py-2 text-[11px] font-semibold text-ink">
+                {row[0]}
+              </div>
+              {row.slice(1).map((cell, j) => (
+                <div
+                  key={`${i}-${j}`}
+                  className={`rounded-lg px-2 py-2 text-center text-[11px] font-semibold ${
+                    cell === "✓"
+                      ? "border border-signal/20 bg-signal/10 text-signal"
+                      : cell === "⚠"
+                        ? "border border-brass/20 bg-brass/10 text-brass"
+                        : "border border-ink/10 bg-white/60 text-muted"
+                  }`}
+                >
+                  {cell}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+        <div className="mt-3 rounded-lg border border-signal/20 bg-signal/8 p-3">
+          <p className="text-[11px] font-semibold text-signal">
+            Failure rate: 25% → 2% through disciplined scenario isolation
+          </p>
+        </div>
+      </div>
+    ),
+    Performance: (
+      <div className="space-y-4">
+        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
+          Execution Timeline & Bottleneck Discovery
+        </p>
+        <div className="space-y-2">
+          {[
+            { phase: "Data Gen", time: "2x faster", width: "35%", color: "bg-brass/15" },
+            { phase: "Load Run", time: "40% shorter", width: "60%", color: "bg-signal/15" },
+            { phase: "Analysis", time: "Automated", width: "45%", color: "bg-ink/8" },
+          ].map((item) => (
+            <div key={item.phase} className="space-y-1">
+              <div className="flex items-center justify-between">
+                <p className="text-xs font-semibold text-ink">{item.phase}</p>
+                <p className="text-[11px] font-semibold text-muted">{item.time}</p>
+              </div>
+              <div className="h-3 rounded-lg border border-ink/10 bg-white/60 overflow-hidden">
+                <div className={`h-full ${item.color} rounded-lg`} style={{ width: item.width }} />
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="mt-3 rounded-lg border border-signal/20 bg-signal/8 p-3">
+          <p className="text-[11px] font-semibold text-signal">
+            Performance bottlenecks exposed across memory, DB latency, lock contention
+          </p>
+        </div>
+      </div>
+    ),
+    "Quality Ops": (
+      <div className="space-y-4">
+        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
+          Release Readiness Dashboard
+        </p>
+        <div className="space-y-2">
+          {[
+            { source: "Jenkins", status: "Runs synced", pct: 88, color: "bg-signal/70" },
+            { source: "Azure Graph", status: "Teams mapped", pct: 94, color: "bg-signal/70" },
+            { source: "Environments", status: "Ready", pct: 72, color: "bg-brass/70" },
+          ].map((item) => (
+            <div key={item.source} className="rounded-lg border border-ink/10 bg-white/60 p-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-semibold text-ink">{item.source}</p>
+                  <p className="mt-0.5 text-[10px] text-muted">{item.status}</p>
+                </div>
+                <span className="text-lg font-bold text-muted">{item.pct}%</span>
+              </div>
+              <div className="mt-2 h-2 rounded-full bg-ink/10">
+                <div
+                  className={`h-2 rounded-full ${item.color}`}
+                  style={{ width: `${item.pct}%` }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="mt-3 rounded-lg border border-signal/20 bg-signal/8 p-3">
+          <p className="text-[11px] font-semibold text-signal">
+            Single source of truth replaced scattered manual status collection
+          </p>
+        </div>
+      </div>
+    ),
+  };
+
+  return (
+    <div className="rounded-xl border border-ink/10 bg-ledger/50 p-4">
+      {visuals[eyebrow]}
+    </div>
+  );
+}
+
 export default function CaseStudyExplorer({ studies }: CaseStudyExplorerProps) {
   const [activeStudy, setActiveStudy] = useState(studies[0]?.eyebrow ?? "");
   const currentStudy = studies.find((study) => study.eyebrow === activeStudy) ?? studies[0];
@@ -66,6 +247,9 @@ export default function CaseStudyExplorer({ studies }: CaseStudyExplorerProps) {
           <p className="mt-4 max-w-2xl text-lg leading-8 text-muted">
             {currentStudy.summary}
           </p>
+          <div className="mt-6">
+            <CaseStudyVisual eyebrow={currentStudy.eyebrow} />
+          </div>
           <div className="mt-6 rounded-[1.4rem] border border-signal/15 bg-signal/10 px-4 py-4">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-signal">
               Impact

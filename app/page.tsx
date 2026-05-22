@@ -1,4 +1,5 @@
 import CaseStudyExplorer from "./CaseStudyExplorer";
+import HeroGraphic from "./HeroGraphic";
 import SkillsExplorer from "./SkillsExplorer";
 
 const metrics = [
@@ -42,19 +43,29 @@ const skillGroups = [
   {
     title: "FinTech",
     items: [
-      "Treasury",
-      "Financial Messaging (SWIFT MT/MX, ISO 20022, CBPR+, SEPA)",
-      "Trade and Risk Management",
-      "FX & OTC",
+      "Treasury Management System (TMS)",
+      "Payment Hub",
       "Cash Management",
-      "Liquidity",
-      "Settlements",
-      "Reconciliation",
-      "Accounting",
       "Cash Position",
-      "Bank Account Management",
+      "Liquidity Management",
+      "In-House Banking (IHB)",
+      "FX and Interest Rate Risk",
+      "Trade and Risk Management",
+      "Straight-Through Processing (STP)",
+      "Cash and Securities Settlements",
+      "Settlement Netting",
+      "Trade Confirmation",
+      "Reconciliation",
+      "Hedge Accounting",
+      "Counterparty Risk",
+      "Value at Risk",
+      "SWIFT MT/MX",
+      "ISO 20022",
+      "CBPR+",
+      "SEPA",
+      "Payment Messaging",
     ],
-    summary: "My strongest domain context is in treasury and financial messaging, where workflow correctness and operational confidence are non-negotiable.",
+    summary: "Domain keywords across treasury, payments, risk, and financial messaging platforms.",
   },
 ];
 
@@ -157,22 +168,25 @@ export default function Home() {
             </div>
           </div>
 
-          <aside className="reveal reveal-delay-2 rounded-[2rem] border border-ink/10 bg-panel p-5 shadow-panel backdrop-blur">
-            <div className="rounded-[1.5rem] border border-ink/10 bg-ledger-grid bg-[length:34px_34px] p-5">
-              <div className="mb-6 flex items-center justify-between border-b border-ink/10 pb-4">
-                <span className="text-xs font-bold uppercase tracking-[0.24em] text-muted">Quality Ledger</span>
-                <span className="rounded-full bg-signal/10 px-3 py-1 text-xs font-bold text-signal">Live systems mindset</span>
-              </div>
-              <div className="space-y-4">
-                {metrics.map((metric) => (
-                  <div key={metric.label} className="grid grid-cols-[5.5rem_1fr] gap-4 rounded-2xl border border-ink/10 bg-white/60 p-4">
-                    <strong className="font-display text-3xl leading-none">{metric.value}</strong>
-                    <span className="text-sm leading-5 text-muted">{metric.label}</span>
-                  </div>
-                ))}
+          <div className="reveal reveal-delay-2 space-y-4">
+            <div className="rounded-[2rem] border border-ink/10 bg-panel p-5 shadow-panel backdrop-blur">
+              <div className="rounded-[1.5rem] border border-ink/10 bg-ledger-grid bg-[length:34px_34px] p-5">
+                <div className="mb-6 flex items-center justify-between border-b border-ink/10 pb-4">
+                  <span className="text-xs font-bold uppercase tracking-[0.24em] text-muted">Quality Ledger</span>
+                  <span className="rounded-full bg-signal/10 px-3 py-1 text-xs font-bold text-signal">Live systems mindset</span>
+                </div>
+                <div className="space-y-4">
+                  {metrics.map((metric) => (
+                    <div key={metric.label} className="grid grid-cols-[5.5rem_1fr] gap-4 rounded-2xl border border-ink/10 bg-white/60 p-4">
+                      <strong className="font-display text-3xl leading-none">{metric.value}</strong>
+                      <span className="text-sm leading-5 text-muted">{metric.label}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          </aside>
+            <HeroGraphic />
+          </div>
         </section>
 
         <section id="systems" className="border-y border-ink/10 py-14">
