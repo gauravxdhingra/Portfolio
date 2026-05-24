@@ -4,15 +4,17 @@ import SkillsExplorer from "./SkillsExplorer";
 
 const metrics = [
   { value: "5", label: "years in fintech quality engineering" },
-  { value: "20+", label: "cross-functional teams supported" },
-  { value: "30%", label: "reduced regression test time" },
+  { value: "100+", label: "distributed components under quality scope" },
+  { value: "25+", label: "cross-functional teams supported" },
+  { value: "30%", label: "release regression cycle reduction" },
+  { value: "40%", label: "performance execution time reduction" },
   { value: "<1%", label: "nightly automation flake rate maintained" },
 ];
 
 const skillGroups = [
   {
     title: "Programming Languages",
-    items: ["Java", "Python", "JavaScript"],
+    items: ["Java", "Python", "JavaScript", "TypeScript", "SQL", "Bash / Shell"],
     summary: "The core languages behind my automation, integration testing, and internal tooling work.",
   },
   {
@@ -37,7 +39,7 @@ const skillGroups = [
   },
   {
     title: "Tooling & CI/CD",
-    items: ["AI", "Jenkins", "Git", "Docker", "Kubernetes", "Maven", "Postman", "Linux / Shell", "Jira", "AWS"],
+    items: ["Jenkins", "GitHub Actions", "GitLab CI", "Git", "Docker", "Kubernetes", "Maven", "Postman", "Linux / Shell", "Jira", "AWS", "Claude", "Copilot", "LLM-based Tooling", "Agentic Workflows"],
     summary: "I build around delivery systems, not outside them, so automation can run reliably where release decisions are actually made.",
   },
   {
@@ -65,11 +67,19 @@ const skillGroups = [
       "SEPA",
       "Payment Messaging",
     ],
-    summary: "Domain keywords across treasury, payments, risk, and financial messaging platforms.",
+    summary: "Hands-on coverage across Wallstreet Suite workflows: treasury, payment messaging, risk, settlements, and reconciliation.",
   },
 ];
 
 const caseStudies = [
+  {
+    eyebrow: "Quality Infrastructure",
+    title: "Quality ownership across 100+ distributed components",
+    summary: "Shared quality infrastructure and standards spanning treasury, risk, settlements, and messaging workflows.",
+    body:
+      "I help own quality across 100+ distributed components and defined shared test strategy across 25+ engineering teams, making testability and release readiness part of engineering decisions from design through deployment.",
+    impact: "One of 3 engineers accountable for platform-wide quality infrastructure",
+  },
   {
     eyebrow: "Automation Architecture",
     title: "Backend and API automation for distributed financial workflows",
@@ -103,12 +113,28 @@ const caseStudies = [
     impact: "3-5x faster test data generation and 40% shorter execution time",
   },
   {
+    eyebrow: "Failure Analysis",
+    title: "Structured RCA with LLM-assisted triage",
+    summary: "Root-cause workflows that reduce cross-team escalation loops and move failure triage from days to hours.",
+    body:
+      "I built a structured RCA workflow and an LLM-assisted investigation agent that uses historical failure patterns to suggest likely investigation paths, helping teams isolate whether failures are code, data, configuration, or environment driven.",
+    impact: "Failure triage reduced from roughly a week to hours",
+  },
+  {
     eyebrow: "Quality Ops",
     title: "Release visibility dashboard replacing manual reporting",
     summary: "Internal tooling that gave release stakeholders environment readiness signal without manual status collection.",
     body:
       "I built a React and Node.js dashboard integrating Jenkins and Azure Graph APIs so release stakeholders could see environment readiness without manual status collection.",
     impact: "Replaced countless manual processes through internal tooling",
+  },
+  {
+    eyebrow: "Platform Tooling",
+    title: "Configuration drift detection across environments",
+    summary: "Internal comparison tooling to catch environment drift before it becomes a release blocker.",
+    body:
+      "I built and own a configuration comparison tool that validates system state across environments and provides precise diffs, so teams can fix drift proactively instead of debugging downstream release failures.",
+    impact: "Earlier detection of environment-induced release risk",
   },
 ];
 
@@ -153,10 +179,10 @@ export default function Home() {
               Senior QA Engineer / SDET
             </p>
             <h1 className="reveal reveal-delay-1 mt-5 max-w-5xl font-display text-5xl font-semibold leading-[0.95] tracking-[-0.05em] sm:text-7xl lg:text-8xl">
-              I build quality systems for fintech platforms where failure is expensive.
+              I help own quality infrastructure for Wallstreet Suite, where failure has direct financial consequence.
             </h1>
             <p className="reveal reveal-delay-2 mt-7 max-w-3xl text-lg leading-8 text-muted sm:text-xl">
-              Backend, API, and UI automation for regulated financial workflows, with deep focus on reliability, CI quality gates, and release readiness.
+              Backend, API, and UI automation for distributed, event-driven financial workflows, focused on correctness under failure, load, and scale with strong CI quality gates and release readiness.
             </p>
             <div className="reveal reveal-delay-3 mt-9 flex flex-col gap-3 sm:flex-row">
               <a className="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-slateblue" href={links.email}>
