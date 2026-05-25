@@ -179,7 +179,7 @@ export default function Home() {
               Senior QA Engineer / SDET
             </p>
             <h1 className="reveal reveal-delay-1 mt-5 max-w-5xl font-display text-5xl font-semibold leading-[0.95] tracking-[-0.05em] sm:text-7xl lg:text-8xl">
-              I help own quality infrastructure for Wallstreet Suite, where failure has direct financial consequence.
+              I build quality systems for fintech platforms where failure is expensive.
             </h1>
             <p className="reveal reveal-delay-2 mt-7 max-w-3xl text-lg leading-8 text-muted sm:text-xl">
               Backend, API, and UI automation for distributed, event-driven financial workflows, focused on correctness under failure, load, and scale with strong CI quality gates and release readiness.

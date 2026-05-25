@@ -289,17 +289,16 @@ export default function CaseStudyExplorer({ studies }: CaseStudyExplorerProps) {
                 </button>
 
                 {isActive && (
-                  <div className="space-y-5 border-t border-ink/10 p-4">
+                  <div className="space-y-4 border-t border-ink/10 p-4">
                     <h3 className="font-display text-2xl font-semibold leading-tight tracking-[-0.03em] text-ink">
                       {study.title}
                     </h3>
                     <p className="text-base leading-7 text-muted">{study.summary}</p>
-                    <CaseStudyVisual eyebrow={study.eyebrow} />
-                    <div className="rounded-[1.2rem] border border-signal/15 bg-signal/10 px-4 py-3">
+                    <div className="pt-1">
                       <p className="text-xs font-bold uppercase tracking-[0.22em] text-signal">Impact</p>
-                      <p className="mt-2 text-sm font-semibold leading-6 text-ink">{study.impact}</p>
+                      <p className="mt-1 text-sm font-semibold leading-6 text-ink">{study.impact}</p>
                     </div>
-                    <div className="rounded-[1.2rem] border border-ink/10 bg-white/68 p-4">
+                    <div className="pt-1">
                       <p className="text-xs font-bold uppercase tracking-[0.22em] text-muted">Execution</p>
                       <p className="mt-3 text-sm leading-7 text-muted">{study.body}</p>
                     </div>
