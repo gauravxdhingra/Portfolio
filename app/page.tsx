@@ -7,7 +7,6 @@ const metrics = [
   { value: "100+", label: "distributed components under quality scope" },
   { value: "25+", label: "cross-functional teams supported" },
   { value: "30%", label: "release regression cycle reduction" },
-  { value: "40%", label: "performance execution time reduction" },
   { value: "<1%", label: "nightly automation flake rate maintained" },
 ];
 
@@ -83,9 +82,9 @@ const caseStudies = [
   {
     eyebrow: "Automation Architecture",
     title: "Backend and API automation for distributed financial workflows",
-    summary: "Reusable automation across REST, async, and queue-driven workflows for earlier signal on settlement and reconciliation risk.",
+    summary: "Reusable automation across REST, async, and queue-driven workflows for earlier signal on defects.",
     body:
-      "I built Python-based Robot Framework automation that validated REST, async, and queue-driven flows against a Java-centric platform, giving teams earlier signal on settlement and reconciliation risk.",
+      "I built Python-based Robot Framework automation that validated REST, async, and queue-driven flows against a Java-centric platform, giving teams earlier signal on defects.",
     impact: "Shift-left coverage across backend and integration layers",
   },
   {
@@ -98,19 +97,19 @@ const caseStudies = [
   },
   {
     eyebrow: "Reliability Engineering",
-    title: "Resilience tests for async services and recovery behavior",
-    summary: "State-of-health and recovery validation focused on isolating environment, data, and configuration-driven failures.",
+    title: "Chaos-style resilience validation for async platform services",
+    summary: "Fault-injection scenarios across services, daemons, and databases to validate restart paths, cascading dependency behavior, and post-recovery functional health.",
     body:
-      "I designed state-of-health tests for services, daemons, and databases, then used disciplined scenario design to isolate environment, data, and configuration failures.",
+      "I built fault-injection resilience tests that intentionally crash services, daemons, and databases, then track state-of-health recovery, cascading dependency impact, startup sequencing issues, and daemon-driven restoration behavior. Each scenario closes with scoped post-recovery functional integration checks to confirm the system is not only up, but behaving correctly.",
     impact: "Component failure rate reduced from 25% to under 2%",
   },
   {
     eyebrow: "Performance",
-    title: "CI-integrated performance testing with generated test data",
-    summary: "Performance coverage shaped around realistic execution flows, backed by faster test-data generation.",
+    title: "Standalone performance testing rebuilt into a reproducible model",
+    summary: "Rebuilt fragmented runs into reproducible performance workflows using observability-first analysis across logs, APM, and JVM signals.",
     body:
-      "I built performance test coverage around realistic execution flows, automated the supporting test data pipeline, and used the results to expose bottlenecks across memory pressure, DB latency, and lock contention.",
-    impact: "3-5x faster test data generation and 40% shorter execution time",
+      "I rebuilt fragmented performance testing from per-run SQL edits plus shell and Python scripts into a reproducible execution model, then used Grafana, OpenSearch/Elasticsearch APM logs, internal monitoring tools, and JVM thread insights from jstack to isolate bottlenecks across memory pressure, DB latency, and lock contention.",
+    impact: "At least 3x faster test data generation and 40% shorter load execution",
   },
   {
     eyebrow: "Failure Analysis",
@@ -121,11 +120,11 @@ const caseStudies = [
     impact: "Failure triage reduced from roughly a week to hours",
   },
   {
-    eyebrow: "Quality Ops",
-    title: "Release visibility dashboard replacing manual reporting",
-    summary: "Internal tooling that gave release stakeholders environment readiness signal without manual status collection.",
+    eyebrow: "Release Test Visibility",
+    title: "Release visibility dashboard for real-time test progress",
+    summary: "Internal tooling that unified Jenkins API and shared Excel data to provide real-time execution visibility for release stakeholders.",
     body:
-      "I built a React and Node.js dashboard integrating Jenkins and Azure Graph APIs so release stakeholders could see environment readiness without manual status collection.",
+      "I built a React and Node.js dashboard that pulled data from the Jenkins API and a shared Excel source to show real-time execution progress and clear release test visibility.",
     impact: "Replaced countless manual processes through internal tooling",
   },
   {

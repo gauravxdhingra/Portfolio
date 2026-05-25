@@ -25,7 +25,6 @@ function CaseStudyVisual({ eyebrow }: { eyebrow: string }) {
           {[
             { layer: "Business Logic", tech: "REST APIs", color: "bg-signal/15" },
             { layer: "Async Workers", tech: "Kafka, Queues", color: "bg-brass/15" },
-            { layer: "State Validation", tech: "Durable State", color: "bg-ink/8" },
           ].map((item, i) => (
             <div key={item.layer} className="flex items-center gap-3">
               <div className={`h-12 w-1 rounded-full ${item.color}`} />
@@ -38,7 +37,7 @@ function CaseStudyVisual({ eyebrow }: { eyebrow: string }) {
         </div>
         <div className="mt-3 rounded-lg border border-signal/20 bg-signal/8 p-3">
           <p className="text-[11px] font-semibold text-signal">
-            Reusable keywords → earlier signal on reconciliation risk
+            Reusable keywords → earlier signal on defects
           </p>
         </div>
       </div>
@@ -51,7 +50,7 @@ function CaseStudyVisual({ eyebrow }: { eyebrow: string }) {
         <div className="flex items-center gap-1">
           {[
             { step: "Login", pct: 100 },
-            { step: "Search", pct: 95 },
+            { step: "Navigate", pct: 95 },
             { step: "Action", pct: 92 },
             { step: "Verify", pct: 88 },
           ].map((item) => (
@@ -78,46 +77,57 @@ function CaseStudyVisual({ eyebrow }: { eyebrow: string }) {
     "Reliability Engineering": (
       <div className="space-y-4">
         <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
-          Recovery Validation Matrix
+          Chaos Recovery Flow
         </p>
-        <div className="grid grid-cols-[1fr_0.9fr_0.9fr_0.9fr] gap-2">
-          <div className="rounded-lg bg-ink px-2 py-2 text-[11px] font-bold text-white">
-            Component
-          </div>
-          {["Restart", "Failover", "Data Drift"].map((header) => (
-            <div key={header} className="rounded-lg bg-ink px-2 py-2 text-center text-[10px] font-bold text-white">
-              {header}
-            </div>
-          ))}
+        <div className="grid grid-cols-1 gap-2">
           {[
-            ["Service", "✓", "✓", "—"],
-            ["Daemon", "✓", "✓", "✓"],
-            ["Database", "⚠", "✓", "✓"],
-          ].map((row, i) => (
-            <div key={i} className="contents">
-              <div className="rounded-lg border border-ink/10 bg-white/60 px-2 py-2 text-[11px] font-semibold text-ink">
-                {row[0]}
-              </div>
-              {row.slice(1).map((cell, j) => (
-                <div
-                  key={`${i}-${j}`}
-                  className={`rounded-lg px-2 py-2 text-center text-[11px] font-semibold ${
-                    cell === "✓"
-                      ? "border border-signal/20 bg-signal/10 text-signal"
-                      : cell === "⚠"
-                        ? "border border-brass/20 bg-brass/10 text-brass"
-                        : "border border-ink/10 bg-white/60 text-muted"
-                  }`}
-                >
-                  {cell}
+            {
+              step: "01",
+              label: "Baseline Healthy State",
+              detail: "Service, daemon, and DB health checks are green before injection.",
+            },
+            {
+              step: "02",
+              label: "Controlled Fault Injection",
+              detail: "Crash one target at a time: service, daemon, or database.",
+            },
+            {
+              step: "03",
+              label: "Recovery & Startup Validation",
+              detail: "Observe restart and failover behavior plus startup sequencing.",
+            },
+            {
+              step: "04",
+              label: "Cascading Dependency Check",
+              detail: "Track downstream impact and cross-component instability.",
+            },
+            {
+              step: "05",
+              label: "Post-Recovery Integration Check",
+              detail: "Run scoped functional checks around the affected crash domain.",
+            },
+          ].map((item) => (
+            <div key={item.step} className="rounded-lg border border-ink/10 bg-white/60 p-3">
+              <div className="flex items-start gap-3">
+                <div className="rounded-md border border-signal/30 bg-signal/10 px-2 py-1 text-[10px] font-bold text-signal">
+                  {item.step}
                 </div>
-              ))}
+                <div>
+                  <p className="text-xs font-semibold text-ink">{item.label}</p>
+                  <p className="mt-1 text-[11px] text-muted leading-relaxed">{item.detail}</p>
+                </div>
+              </div>
             </div>
           ))}
         </div>
+        <div className="rounded-lg border border-ink/10 bg-white/60 p-3">
+          <p className="text-[11px] text-muted leading-relaxed">
+            This visual reflects a chaos workflow: inject failure, validate recovery behavior, assess dependency cascades, and confirm post-recovery functional correctness.
+          </p>
+        </div>
         <div className="mt-3 rounded-lg border border-signal/20 bg-signal/8 p-3">
           <p className="text-[11px] font-semibold text-signal">
-            Failure rate: 25% → 2% through disciplined scenario isolation
+            Failure rate: 25% → &lt;2% through disciplined scenario isolation
           </p>
         </div>
       </div>
@@ -129,9 +139,8 @@ function CaseStudyVisual({ eyebrow }: { eyebrow: string }) {
         </p>
         <div className="space-y-2">
           {[
-            { phase: "Data Gen", time: "2x faster", width: "35%", color: "bg-brass/15" },
+            { phase: "Data Gen", time: "3x faster", width: "55%", color: "bg-brass/15" },
             { phase: "Load Run", time: "40% shorter", width: "60%", color: "bg-signal/15" },
-            { phase: "Analysis", time: "Automated", width: "45%", color: "bg-ink/8" },
           ].map((item) => (
             <div key={item.phase} className="space-y-1">
               <div className="flex items-center justify-between">
@@ -144,6 +153,23 @@ function CaseStudyVisual({ eyebrow }: { eyebrow: string }) {
             </div>
           ))}
         </div>
+        <div className="rounded-lg border border-ink/10 bg-white/60 p-3">
+          <p className="text-[11px] text-muted leading-relaxed">
+            Performance runs analyzed with Grafana, OpenSearch/Elasticsearch APM logs, internal monitoring tools, and JVM diagnostics.
+          </p>
+        </div>
+        <div className="grid grid-cols-3 gap-2">
+          {[
+            { label: "Throughput", value: "Tracked", tone: "text-signal" },
+            { label: "p95", value: "Tracked", tone: "text-signal" },
+            { label: "p99", value: "Tracked", tone: "text-brass" },
+          ].map((metric) => (
+            <div key={metric.label} className="rounded-lg border border-ink/10 bg-white/60 p-3 text-center">
+              <p className="text-[10px] uppercase tracking-[0.12em] text-muted">{metric.label}</p>
+              <p className={`mt-1 text-sm font-bold ${metric.tone}`}>{metric.value}</p>
+            </div>
+          ))}
+        </div>
         <div className="mt-3 rounded-lg border border-signal/20 bg-signal/8 p-3">
           <p className="text-[11px] font-semibold text-signal">
             Performance bottlenecks exposed across memory, DB latency, lock contention
@@ -151,16 +177,16 @@ function CaseStudyVisual({ eyebrow }: { eyebrow: string }) {
         </div>
       </div>
     ),
-    "Quality Ops": (
+    "Release Test Visibility": (
       <div className="space-y-4">
         <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
           Release Readiness Dashboard
         </p>
         <div className="space-y-2">
           {[
-            { source: "Jenkins", status: "Runs synced", pct: 88, color: "bg-signal/70" },
-            { source: "Azure Graph", status: "Teams mapped", pct: 94, color: "bg-signal/70" },
-            { source: "Environments", status: "Ready", pct: 72, color: "bg-brass/70" },
+            { source: "Jenkins API", status: "Run progress synced", tag: "Live" },
+            { source: "Shared Excel", status: "Execution feed mapped", tag: "Live" },
+            { source: "Visibility", status: "Release view ready", tag: "Unified" },
           ].map((item) => (
             <div key={item.source} className="rounded-lg border border-ink/10 bg-white/60 p-3">
               <div className="flex items-center justify-between">
@@ -168,20 +194,16 @@ function CaseStudyVisual({ eyebrow }: { eyebrow: string }) {
                   <p className="text-xs font-semibold text-ink">{item.source}</p>
                   <p className="mt-0.5 text-[10px] text-muted">{item.status}</p>
                 </div>
-                <span className="text-lg font-bold text-muted">{item.pct}%</span>
-              </div>
-              <div className="mt-2 h-2 rounded-full bg-ink/10">
-                <div
-                  className={`h-2 rounded-full ${item.color}`}
-                  style={{ width: `${item.pct}%` }}
-                />
+                <span className="rounded-md border border-signal/25 bg-signal/10 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-signal">
+                  {item.tag}
+                </span>
               </div>
             </div>
           ))}
         </div>
         <div className="mt-3 rounded-lg border border-signal/20 bg-signal/8 p-3">
           <p className="text-[11px] font-semibold text-signal">
-            Single source of truth replaced scattered manual status collection
+            Real-time dashboard replaced scattered manual status updates
           </p>
         </div>
       </div>
