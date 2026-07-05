@@ -7,6 +7,7 @@ const metrics = [
   { value: "25+", label: "cross-functional teams supported" },
   { value: "30%", label: "release regression cycle reduction" },
   { value: "<1%", label: "nightly automation flake rate maintained" },
+  { value: "AI", label: "RAG-powered scenario generation, from days to minutes" },
 ];
 
 const skillGroups = [
@@ -84,12 +85,12 @@ const caseStudies = [
     impact: "One of 3 engineers accountable for platform-wide quality infrastructure",
   },
   {
-    eyebrow: "Automation Architecture",
-    title: "Backend and API automation for distributed financial workflows",
-    summary: "Reusable automation across REST, async, and queue-driven workflows for earlier signal on defects.",
+    eyebrow: "RAG Test Generation",
+    title: "RAG-based test generation for deterministic scenario authoring",
+    summary: "Hybrid retrieval with dynamic context injection over the team's existing test suite, replacing generic zero-shot LLM output with accurate, domain-aware scenarios.",
     body:
-      "Built with Python-based Robot Framework against a Java-centric platform, where most off-the-shelf tooling assumed a single-language stack.",
-    impact: "Shift-left coverage across backend and integration layers",
+      "Outperformed naive codebase-wide search, which burned tokens on irrelevant context and still produced generic output. Deployed as an internal self-serve tool via FastAPI, so teams generate scenarios without waiting on manual authoring.",
+    impact: "AI-powered (RAG) scenario authoring reduced from days to minutes",
   },
   {
     eyebrow: "UI Modernization",
@@ -100,12 +101,20 @@ const caseStudies = [
     impact: "Modern UI coverage built around Playwright",
   },
   {
+    eyebrow: "Automation Architecture",
+    title: "Backend and API automation for distributed financial workflows",
+    summary: "Reusable automation across REST, async, and queue-driven workflows for earlier signal on defects.",
+    body:
+      "Built with Python-based Robot Framework against a Java-centric platform, where most off-the-shelf tooling assumed a single-language stack.",
+    impact: "Shift-left coverage across backend and integration layers",
+  },
+  {
     eyebrow: "Reliability Engineering",
     title: "Chaos-style resilience validation for async platform services",
     summary: "Fault-injection scenarios across services, daemons, and databases to validate restart paths, cascading dependency behavior, and post-recovery functional health.",
     body:
       "Scoped around the failures unit and integration tests miss: what actually happens when a dependency dies mid-transaction, not just whether the happy path passes.",
-    impact: "Component failure rate reduced from 25% to under 2%",
+    impact: "Chaos-tested component failure rate reduced from 25% to under 2%",
   },
   {
     eyebrow: "Performance",
@@ -116,20 +125,12 @@ const caseStudies = [
     impact: "At least 3x faster test data generation and 40% shorter load execution",
   },
   {
-    eyebrow: "RAG Test Generation",
-    title: "RAG-based test generation for deterministic scenario authoring",
-    summary: "Hybrid retrieval with dynamic context injection over the team's existing test suite, replacing generic zero-shot LLM output with accurate, domain-aware scenarios.",
-    body:
-      "Outperformed naive codebase-wide search, which burned tokens on irrelevant context and still produced generic output. Deployed as an internal self-serve tool via FastAPI, so teams generate scenarios without waiting on manual authoring.",
-    impact: "Scenario authoring reduced from days to minutes",
-  },
-  {
     eyebrow: "Failure Analysis",
     title: "Structured RCA with LLM-assisted triage",
-    summary: "Root-cause workflows that reduce cross-team escalation loops and move failure triage from days to hours.",
+    summary: "Root-cause workflows that reduce cross-team escalation loops and move failure triage from hours to minutes.",
     body:
       "I built a structured RCA workflow and an LLM-assisted investigation agent that uses historical failure patterns to suggest likely investigation paths, helping teams isolate whether failures are code, data, configuration, or environment driven.",
-    impact: "Failure triage reduced from roughly a week to hours",
+    impact: "AI-assisted failure triage reduced from hours to minutes",
   },
 ];
 
@@ -179,7 +180,7 @@ export default function Home() {
             <p className="reveal reveal-delay-2 mt-7 max-w-3xl text-lg leading-8 text-muted sm:text-xl">
               Backend, API, and UI automation for distributed, event-driven financial workflows, focused on correctness under failure, load, and scale with strong CI quality gates and release readiness.
             </p>
-            <div className="reveal reveal-delay-3 mt-9 flex flex-col gap-3 sm:flex-row">
+            <div className="reveal reveal-delay-3 mt-9 flex flex-wrap gap-3">
               <a className="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-slateblue" href={links.email}>
                 Email me <ArrowIcon />
               </a>
@@ -196,7 +197,7 @@ export default function Home() {
             </div>
             <div className="space-y-4">
               {metrics.map((metric) => (
-                <div key={metric.label} className="grid grid-cols-[5.5rem_1fr] gap-4 rounded-2xl border border-ink/10 bg-white/60 p-4">
+                <div key={metric.label} className="grid grid-cols-[5.5rem_1fr] items-center gap-4 rounded-2xl border border-ink/10 bg-white/60 p-4">
                   <strong className="font-display text-3xl leading-none">{metric.value}</strong>
                   <span className="text-sm leading-5 text-muted">{metric.label}</span>
                 </div>

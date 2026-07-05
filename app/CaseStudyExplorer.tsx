@@ -14,26 +14,44 @@ type CaseStudyExplorerProps = {
   studies: CaseStudy[];
 };
 
+function CheckIcon() {
+  return (
+    <svg aria-hidden="true" className="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none">
+      <path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 function CaseStudyVisual({ eyebrow }: { eyebrow: string }) {
   const visuals: Record<string, React.ReactNode> = {
     "Automation Architecture": (
       <div className="space-y-4">
         <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
-          Layered Test Coverage
+          Shift-Left Coverage Map
         </p>
-        <div className="space-y-2">
-          {[
-            { layer: "Business Logic", tech: "REST APIs", color: "bg-signal/15" },
-            { layer: "Async Workers", tech: "Kafka, Queues", color: "bg-brass/15" },
-          ].map((item, i) => (
-            <div key={item.layer} className="flex items-center gap-3">
-              <div className={`h-12 w-1 rounded-full ${item.color}`} />
-              <div className="flex-1">
-                <p className="text-xs font-semibold text-ink">{item.layer}</p>
-                <p className="mt-0.5 text-[11px] text-muted">{item.tech}</p>
+        <div className="relative rounded-lg border border-ink/10 bg-white/60 p-3">
+          <div className="absolute left-[26px] top-[38px] bottom-[38px] w-px bg-ink/15" />
+          <div className="space-y-2.5">
+            {[
+              { layer: "REST APIs", tech: "Synchronous business logic, request/response contracts", color: "signal" },
+              { layer: "Kafka & Queues", tech: "Async workers, event-driven and retry paths", color: "brass" },
+              { layer: "Downstream Services", tech: "Cross-service contracts and integration boundaries", color: "signal" },
+            ].map((item) => (
+              <div key={item.layer} className="relative z-10 flex items-center gap-3">
+                <div
+                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 bg-white ${
+                    item.color === "signal" ? "border-signal/50 text-signal" : "border-brass/50 text-brass"
+                  }`}
+                >
+                  <CheckIcon />
+                </div>
+                <div className="flex-1 rounded-lg border border-ink/10 bg-white/70 px-3 py-2">
+                  <p className="text-xs font-semibold text-ink">{item.layer}</p>
+                  <p className="mt-0.5 text-[10px] text-muted">{item.tech}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     ),
@@ -42,25 +60,35 @@ function CaseStudyVisual({ eyebrow }: { eyebrow: string }) {
         <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
           Playwright Test Flow
         </p>
-        <div className="flex items-center gap-1">
-          {[
-            { step: "Login", pct: 100 },
-            { step: "Navigate", pct: 95 },
-            { step: "Action", pct: 92 },
-            { step: "Verify", pct: 88 },
-          ].map((item) => (
-            <div key={item.step} className="flex-1">
-              <div className="flex h-16 flex-col items-center justify-between">
-                <div
-                  className="w-full rounded-t-lg border-x border-t border-ink/10 bg-signal/12"
-                  style={{ height: `${item.pct * 0.12}px` }}
-                />
-                <div className="h-5 w-full border border-ink/10 rounded-b-lg bg-white/60 flex items-center justify-center">
-                  <p className="text-[9px] font-semibold text-muted">{item.step}</p>
+        <div className="rounded-lg border border-ink/10 bg-white/60 p-4">
+          <div className="mb-5 flex items-center gap-1.5 rounded-md border border-ink/10 bg-white/70 px-3 py-2">
+            <span className="h-2 w-2 rounded-full bg-ink/20" />
+            <span className="h-2 w-2 rounded-full bg-ink/20" />
+            <span className="h-2 w-2 rounded-full bg-ink/20" />
+            <span className="ml-2 truncate text-[9px] font-semibold text-muted">
+              playwright · e2e-suite.spec.ts
+            </span>
+            <span className="ml-auto rounded-full bg-signal/15 px-2 py-0.5 text-[9px] font-bold text-signal">
+              94% avg pass
+            </span>
+          </div>
+          <div className="relative flex items-start justify-between px-1">
+            <div className="absolute left-[12.5%] right-[12.5%] top-4 h-px bg-ink/15" />
+            {[
+              { step: "Login", pct: 100 },
+              { step: "Navigate", pct: 95 },
+              { step: "Action", pct: 92 },
+              { step: "Verify", pct: 88 },
+            ].map((item) => (
+              <div key={item.step} className="relative z-10 flex flex-1 flex-col items-center gap-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-signal/50 bg-signal/10 text-signal">
+                  <CheckIcon />
                 </div>
+                <p className="text-[10px] font-semibold text-ink">{item.step}</p>
+                <p className="text-[9px] font-bold text-signal">{item.pct}%</p>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     ),
@@ -117,18 +145,29 @@ function CaseStudyVisual({ eyebrow }: { eyebrow: string }) {
         <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
           Execution Timeline & Bottleneck Discovery
         </p>
-        <div className="space-y-2">
+        <div className="space-y-3">
           {[
-            { phase: "Data Gen", time: "3x faster", width: "55%", color: "bg-brass/15" },
-            { phase: "Load Run", time: "40% shorter", width: "60%", color: "bg-signal/15" },
+            { phase: "Test Data Generation", time: "3x faster", afterPct: 33 },
+            { phase: "Load Execution", time: "40% shorter", afterPct: 60 },
           ].map((item) => (
-            <div key={item.phase} className="space-y-1">
+            <div key={item.phase} className="space-y-1.5">
               <div className="flex items-center justify-between">
                 <p className="text-xs font-semibold text-ink">{item.phase}</p>
-                <p className="text-[11px] font-semibold text-muted">{item.time}</p>
+                <p className="text-[11px] font-semibold text-signal">{item.time}</p>
               </div>
-              <div className="h-3 rounded-lg border border-ink/10 bg-white/60 overflow-hidden">
-                <div className={`h-full ${item.color} rounded-lg`} style={{ width: item.width }} />
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="w-10 shrink-0 text-[9px] font-semibold text-muted">Before</span>
+                  <div className="h-2.5 flex-1 rounded-full bg-ink/10">
+                    <div className="h-full w-full rounded-full bg-ink/25" />
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-10 shrink-0 text-[9px] font-semibold text-muted">After</span>
+                  <div className="h-2.5 flex-1 rounded-full bg-ink/10">
+                    <div className="h-full rounded-full bg-signal/60" style={{ width: `${item.afterPct}%` }} />
+                  </div>
+                </div>
               </div>
             </div>
           ))}
@@ -199,17 +238,50 @@ function CaseStudyVisual({ eyebrow }: { eyebrow: string }) {
       </div>
     ),
     "Failure Analysis": (
-      <div className="space-y-3">
+      <div className="space-y-4">
         <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
-          RCA Funnel
+          LLM-Assisted RCA Triage
         </p>
-        <div className="space-y-2">
-          {["Signal", "Categorize", "Correlate", "Route"].map((step, idx) => (
-            <div key={step} className="flex items-center gap-3 rounded-lg border border-ink/10 bg-white/60 p-2.5">
-              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-signal/15 text-[11px] font-bold text-signal">{idx + 1}</span>
-              <p className="text-xs font-semibold text-ink">{step}</p>
+        <div className="rounded-lg border border-ink/10 bg-white/60 p-3">
+          <div className="flex items-center justify-between rounded-lg border border-ink/10 bg-white/70 p-3">
+            <div className="text-center">
+              <p className="text-[9px] font-semibold uppercase tracking-[0.12em] text-muted">Before</p>
+              <p className="font-display text-lg font-bold text-ink">Hours</p>
             </div>
-          ))}
+            <span className="text-muted">→</span>
+            <div className="text-center">
+              <p className="text-[9px] font-semibold uppercase tracking-[0.12em] text-muted">After</p>
+              <p className="font-display text-lg font-bold text-signal">Minutes</p>
+            </div>
+          </div>
+          <div className="mt-3 flex items-center gap-1.5">
+            <span className="rounded-full border border-ink/10 bg-white/70 px-2.5 py-1 text-[9px] font-semibold text-ink">
+              Failure Signal
+            </span>
+            <span className="text-[10px] text-muted">→</span>
+            <span className="rounded-full border border-signal/30 bg-signal/10 px-2.5 py-1 text-[9px] font-bold text-signal">
+              Historical Pattern Match
+            </span>
+          </div>
+          <div className="mt-2 grid grid-cols-2 gap-2">
+            {[
+              { cat: "Code", color: "signal" },
+              { cat: "Data", color: "brass" },
+              { cat: "Configuration", color: "brass" },
+              { cat: "Environment", color: "signal" },
+            ].map((item) => (
+              <div
+                key={item.cat}
+                className={`rounded-lg border px-3 py-2 text-center ${
+                  item.color === "signal" ? "border-signal/30 bg-signal/10" : "border-brass/30 bg-brass/10"
+                }`}
+              >
+                <p className={`text-[11px] font-semibold ${item.color === "signal" ? "text-signal" : "text-brass"}`}>
+                  {item.cat}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     ),
@@ -255,9 +327,11 @@ export default function CaseStudyExplorer({ studies }: CaseStudyExplorerProps) {
           const accent = index % 2 === 0 ? "signal" : "brass";
 
           return (
-            <div
+            <button
               key={study.eyebrow}
-              className={`flex flex-col gap-4 rounded-[1.5rem] border-t-4 border border-ink/10 bg-white/60 p-5 shadow-sm ${
+              type="button"
+              onClick={() => setOpenEyebrow(study.eyebrow)}
+              className={`group flex flex-col gap-4 rounded-[1.5rem] border-t-4 border border-ink/10 bg-white/60 p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${
                 accent === "signal" ? "border-t-signal/50" : "border-t-brass/50"
               }`}
             >
@@ -282,14 +356,10 @@ export default function CaseStudyExplorer({ studies }: CaseStudyExplorerProps) {
                 {study.title}
               </p>
 
-              <button
-                type="button"
-                onClick={() => setOpenEyebrow(study.eyebrow)}
-                className="mt-auto self-start text-sm font-semibold text-signal transition hover:text-ink"
-              >
+              <span className="mt-auto self-start text-sm font-semibold text-signal transition group-hover:text-ink">
                 Details →
-              </button>
-            </div>
+              </span>
+            </button>
           );
         })}
       </div>
