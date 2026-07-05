@@ -12,13 +12,21 @@ type SkillsExplorerProps = {
   groups: SkillGroup[];
 };
 
+const COLLAPSED_LIMIT = 10;
+
 export default function SkillsExplorer({ groups }: SkillsExplorerProps) {
   const [activeGroup, setActiveGroup] = useState(groups[0]?.title ?? "");
+  const [expanded, setExpanded] = useState(false);
   const currentGroup = groups.find((group) => group.title === activeGroup) ?? groups[0];
 
   if (!currentGroup) {
     return null;
   }
+
+  const isLongList = currentGroup.items.length > COLLAPSED_LIMIT;
+  const visibleItems = isLongList && !expanded
+    ? currentGroup.items.slice(0, COLLAPSED_LIMIT)
+    : currentGroup.items;
 
   return (
     <div className="rounded-[1.75rem] border border-ink/10 bg-white/50 p-4 shadow-sm backdrop-blur sm:p-6">
@@ -30,7 +38,10 @@ export default function SkillsExplorer({ groups }: SkillsExplorerProps) {
             <button
               key={group.title}
               type="button"
-              onClick={() => setActiveGroup(group.title)}
+              onClick={() => {
+                setActiveGroup(group.title);
+                setExpanded(false);
+              }}
               className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
                 isActive
                   ? "bg-ink text-white"
@@ -52,15 +63,26 @@ export default function SkillsExplorer({ groups }: SkillsExplorerProps) {
           <p className="mt-3 text-sm leading-6 text-muted">{currentGroup.summary}</p>
         </div>
 
-        <div className="flex flex-wrap gap-3">
-          {currentGroup.items.map((item) => (
-            <span
-              key={item}
-              className="rounded-full border border-ink/10 bg-white/70 px-3 py-2 text-sm text-muted"
+        <div>
+          <div className="flex flex-wrap gap-3">
+            {visibleItems.map((item) => (
+              <span
+                key={item}
+                className="rounded-full border border-ink/10 bg-white/70 px-3 py-2 text-sm text-muted"
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+          {isLongList && (
+            <button
+              type="button"
+              onClick={() => setExpanded((value) => !value)}
+              className="mt-3 text-sm font-semibold text-signal transition hover:text-ink"
             >
-              {item}
-            </span>
-          ))}
+              {expanded ? "Show less" : `Show ${currentGroup.items.length - COLLAPSED_LIMIT} more`}
+            </button>
+          )}
         </div>
       </div>
     </div>

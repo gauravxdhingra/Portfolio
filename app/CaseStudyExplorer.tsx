@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type CaseStudy = {
   eyebrow: string;
@@ -35,11 +35,6 @@ function CaseStudyVisual({ eyebrow }: { eyebrow: string }) {
             </div>
           ))}
         </div>
-        <div className="mt-3 rounded-lg border border-signal/20 bg-signal/8 p-3">
-          <p className="text-[11px] font-semibold text-signal">
-            Reusable keywords → earlier signal on defects
-          </p>
-        </div>
       </div>
     ),
     "UI Modernization": (
@@ -66,11 +61,6 @@ function CaseStudyVisual({ eyebrow }: { eyebrow: string }) {
               </div>
             </div>
           ))}
-        </div>
-        <div className="mt-3 rounded-lg border border-signal/20 bg-signal/8 p-3">
-          <p className="text-[11px] font-semibold text-signal">
-            Stable selectors + trace debugging = production-ready coverage
-          </p>
         </div>
       </div>
     ),
@@ -120,16 +110,6 @@ function CaseStudyVisual({ eyebrow }: { eyebrow: string }) {
             </div>
           ))}
         </div>
-        <div className="rounded-lg border border-ink/10 bg-white/60 p-3">
-          <p className="text-[11px] text-muted leading-relaxed">
-            This visual reflects a chaos workflow: inject failure, validate recovery behavior, assess dependency cascades, and confirm post-recovery functional correctness.
-          </p>
-        </div>
-        <div className="mt-3 rounded-lg border border-signal/20 bg-signal/8 p-3">
-          <p className="text-[11px] font-semibold text-signal">
-            Failure rate: 25% → &lt;2% through disciplined scenario isolation
-          </p>
-        </div>
       </div>
     ),
     Performance: (
@@ -170,42 +150,6 @@ function CaseStudyVisual({ eyebrow }: { eyebrow: string }) {
             </div>
           ))}
         </div>
-        <div className="mt-3 rounded-lg border border-signal/20 bg-signal/8 p-3">
-          <p className="text-[11px] font-semibold text-signal">
-            Performance bottlenecks exposed across memory, DB latency, lock contention
-          </p>
-        </div>
-      </div>
-    ),
-    "Release Test Visibility": (
-      <div className="space-y-4">
-        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
-          Release Readiness Dashboard
-        </p>
-        <div className="space-y-2">
-          {[
-            { source: "Jenkins API", status: "Run progress synced", tag: "Live" },
-            { source: "Shared Excel", status: "Execution feed mapped", tag: "Live" },
-            { source: "Visibility", status: "Release view ready", tag: "Unified" },
-          ].map((item) => (
-            <div key={item.source} className="rounded-lg border border-ink/10 bg-white/60 p-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-semibold text-ink">{item.source}</p>
-                  <p className="mt-0.5 text-[10px] text-muted">{item.status}</p>
-                </div>
-                <span className="rounded-md border border-signal/25 bg-signal/10 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-signal">
-                  {item.tag}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="mt-3 rounded-lg border border-signal/20 bg-signal/8 p-3">
-          <p className="text-[11px] font-semibold text-signal">
-            Real-time dashboard replaced scattered manual status updates
-          </p>
-        </div>
       </div>
     ),
     "Quality Infrastructure": (
@@ -227,6 +171,33 @@ function CaseStudyVisual({ eyebrow }: { eyebrow: string }) {
         </div>
       </div>
     ),
+    "RAG Test Generation": (
+      <div className="space-y-4">
+        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
+          Hybrid Retrieval Pipeline
+        </p>
+        <div className="space-y-2">
+          {[
+            { step: "01", label: "Existing Test Suite Indexed", detail: "Hybrid lexical + embedding retrieval over the team's real test corpus." },
+            { step: "02", label: "Dynamic Context Injection", detail: "Only relevant, domain-specific examples are pulled per request." },
+            { step: "03", label: "Grounded Generation", detail: "Retrieval-grounded prompt reduces hallucination and format drift." },
+            { step: "04", label: "Self-Serve Delivery", detail: "Exposed to the team as a FastAPI endpoint, no manual authoring." },
+          ].map((item) => (
+            <div key={item.step} className="rounded-lg border border-ink/10 bg-white/60 p-3">
+              <div className="flex items-start gap-3">
+                <div className="rounded-md border border-signal/30 bg-signal/10 px-2 py-1 text-[10px] font-bold text-signal">
+                  {item.step}
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-ink">{item.label}</p>
+                  <p className="mt-1 text-[11px] text-muted leading-relaxed">{item.detail}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    ),
     "Failure Analysis": (
       <div className="space-y-3">
         <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
@@ -242,26 +213,6 @@ function CaseStudyVisual({ eyebrow }: { eyebrow: string }) {
         </div>
       </div>
     ),
-    "Platform Tooling": (
-      <div className="space-y-3">
-        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
-          Environment Drift Check
-        </p>
-        <div className="grid grid-cols-2 gap-2">
-          <div className="rounded-lg border border-ink/10 bg-white/60 p-3">
-            <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-muted">Source</p>
-            <p className="mt-1 text-xs font-semibold text-ink">Env A Config</p>
-          </div>
-          <div className="rounded-lg border border-ink/10 bg-white/60 p-3">
-            <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-muted">Target</p>
-            <p className="mt-1 text-xs font-semibold text-ink">Env B Config</p>
-          </div>
-          <div className="col-span-2 rounded-lg border border-signal/20 bg-signal/8 p-3">
-            <p className="text-xs font-semibold text-signal">Diff output highlights release-risk mismatches before deployment.</p>
-          </div>
-        </div>
-      </div>
-    ),
   };
 
   return (
@@ -274,127 +225,116 @@ function CaseStudyVisual({ eyebrow }: { eyebrow: string }) {
 }
 
 export default function CaseStudyExplorer({ studies }: CaseStudyExplorerProps) {
-  const [activeStudy, setActiveStudy] = useState(studies[0]?.eyebrow ?? "");
-  const currentStudy = studies.find((study) => study.eyebrow === activeStudy) ?? studies[0];
+  const [openEyebrow, setOpenEyebrow] = useState<string | null>(null);
+  const openStudy = studies.find((study) => study.eyebrow === openEyebrow) ?? null;
 
-  if (!currentStudy) {
-    return null;
-  }
+  useEffect(() => {
+    if (!openStudy) {
+      return;
+    }
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpenEyebrow(null);
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [openStudy]);
 
   return (
-    <div className="rounded-[1.9rem] border border-ink/10 bg-white/52 shadow-panel backdrop-blur">
-      <div className="p-4 sm:p-5 lg:hidden">
-        <p className="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-muted">
-          Workstreams
-        </p>
-        <div className="space-y-3">
-          {studies.map((study) => {
-            const isActive = study.eyebrow === currentStudy.eyebrow;
+    <>
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {studies.map((study, index) => {
+          const accent = index % 2 === 0 ? "signal" : "brass";
 
-            return (
-              <div key={study.eyebrow} className="rounded-[1.2rem] border border-ink/10 bg-white/70">
-                <button
-                  type="button"
-                  onClick={() => setActiveStudy(study.eyebrow)}
-                  className={`w-full rounded-[1.2rem] px-4 py-3 text-left transition ${
-                    isActive
-                      ? "bg-ink text-white"
-                      : "text-ink hover:bg-white"
+          return (
+            <div
+              key={study.eyebrow}
+              className={`flex flex-col gap-4 rounded-[1.5rem] border-t-4 border border-ink/10 bg-white/60 p-5 shadow-sm ${
+                accent === "signal" ? "border-t-signal/50" : "border-t-brass/50"
+              }`}
+            >
+              <div className="flex items-center justify-between">
+                <span
+                  className={`inline-flex h-7 w-7 items-center justify-center rounded-full text-[11px] font-bold ${
+                    accent === "signal" ? "bg-signal/15 text-signal" : "bg-brass/15 text-brass"
                   }`}
                 >
-                  <p className={`text-[11px] font-bold uppercase tracking-[0.22em] ${isActive ? "text-brass" : "text-muted"}`}>
-                    {study.eyebrow}
-                  </p>
-                  <p className="mt-2 text-sm leading-6">
-                    {study.summary}
-                  </p>
-                </button>
-
-                {isActive && (
-                  <div className="space-y-4 border-t border-ink/10 p-4">
-                    <h3 className="font-display text-2xl font-semibold leading-tight tracking-[-0.03em] text-ink">
-                      {study.title}
-                    </h3>
-                    <p className="text-base leading-7 text-muted">{study.summary}</p>
-                    <div className="pt-1">
-                      <p className="text-xs font-bold uppercase tracking-[0.22em] text-signal">Impact</p>
-                      <p className="mt-1 text-sm font-semibold leading-6 text-ink">{study.impact}</p>
-                    </div>
-                    <div className="pt-1">
-                      <p className="text-xs font-bold uppercase tracking-[0.22em] text-muted">Execution</p>
-                      <p className="mt-3 text-sm leading-7 text-muted">{study.body}</p>
-                    </div>
-                  </div>
-                )}
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-muted">
+                  {study.eyebrow}
+                </p>
               </div>
-            );
-          })}
-        </div>
+
+              <p className="font-display text-2xl font-semibold leading-tight tracking-[-0.03em] text-ink">
+                {study.impact}
+              </p>
+
+              <p className="text-sm font-semibold leading-6 text-muted">
+                {study.title}
+              </p>
+
+              <button
+                type="button"
+                onClick={() => setOpenEyebrow(study.eyebrow)}
+                className="mt-auto self-start text-sm font-semibold text-signal transition hover:text-ink"
+              >
+                Details →
+              </button>
+            </div>
+          );
+        })}
       </div>
 
-      <div className="hidden gap-0 lg:grid lg:grid-cols-[0.34fr_0.66fr]">
-        <aside className="border-b border-ink/10 bg-ledger/55 p-4 lg:border-b-0 lg:border-r lg:p-5">
-          <p className="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-muted">
-            Workstreams
-          </p>
-          <div className="space-y-2">
-            {studies.map((study) => {
-              const isActive = study.eyebrow === currentStudy.eyebrow;
+      {openStudy && (
+        <div role="dialog" aria-modal="true" className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+          <button
+            type="button"
+            aria-label="Close details"
+            className="absolute inset-0 bg-ink/50 backdrop-blur-sm"
+            onClick={() => setOpenEyebrow(null)}
+          />
+          <div className="relative max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-[1.75rem] border border-ink/10 bg-white p-6 shadow-panel sm:p-8">
+            <button
+              type="button"
+              onClick={() => setOpenEyebrow(null)}
+              aria-label="Close details"
+              className="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full border border-ink/10 text-muted transition hover:border-ink/30 hover:text-ink"
+            >
+              ×
+            </button>
 
-              return (
-                <button
-                  key={study.eyebrow}
-                  type="button"
-                  onClick={() => setActiveStudy(study.eyebrow)}
-                  className={`w-full rounded-[1.2rem] border px-4 py-3 text-left transition ${
-                    isActive
-                      ? "border-ink/15 bg-ink text-white shadow-sm"
-                      : "border-ink/10 bg-white/60 text-ink hover:border-ink/20 hover:bg-white/85"
-                  }`}
-                >
-                  <p className={`text-[11px] font-bold uppercase tracking-[0.22em] ${isActive ? "text-brass" : "text-muted"}`}>
-                    {study.eyebrow}
-                  </p>
-                  <p className="mt-2 text-sm leading-6">
-                    {study.summary}
-                  </p>
-                </button>
-              );
-            })}
-          </div>
-        </aside>
-
-        <div className="p-5 sm:p-7">
-          <p className="text-xs font-bold uppercase tracking-[0.24em] text-muted">
-            {currentStudy.eyebrow}
-          </p>
-          <h3 className="mt-3 max-w-2xl font-display text-3xl font-semibold leading-tight tracking-[-0.04em] text-ink sm:text-4xl">
-            {currentStudy.title}
-          </h3>
-          <p className="mt-4 max-w-2xl text-lg leading-8 text-muted">
-            {currentStudy.summary}
-          </p>
-          <div className="mt-6">
-            <CaseStudyVisual eyebrow={currentStudy.eyebrow} />
-          </div>
-          <div className="mt-6 rounded-[1.4rem] border border-signal/15 bg-signal/10 px-4 py-4">
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-signal">
-              Impact
+            <p className="pr-10 text-xs font-bold uppercase tracking-[0.24em] text-signal">
+              {openStudy.eyebrow}
             </p>
-            <p className="mt-2 text-base font-semibold leading-7 text-ink">
-              {currentStudy.impact}
+            <h3 className="mt-3 max-w-xl font-display text-3xl font-semibold leading-tight tracking-[-0.04em] text-ink">
+              {openStudy.title}
+            </h3>
+            <p className="mt-4 max-w-xl text-lg leading-8 text-muted">
+              {openStudy.summary}
             </p>
-          </div>
-          <div className="mt-6 rounded-[1.4rem] border border-ink/10 bg-white/68 p-4">
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-muted">
-              Execution
-            </p>
-            <p className="mt-3 leading-7 text-muted">
-              {currentStudy.body}
-            </p>
+            <div className="mt-6">
+              <CaseStudyVisual eyebrow={openStudy.eyebrow} />
+            </div>
+            <div className="mt-5 rounded-[1.4rem] border border-signal/15 bg-signal/10 px-4 py-4">
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-signal">Impact</p>
+              <p className="mt-2 text-base font-semibold leading-7 text-ink">{openStudy.impact}</p>
+            </div>
+            <div className="mt-5">
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-muted">Execution</p>
+              <p className="mt-2 leading-7 text-muted">{openStudy.body}</p>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }

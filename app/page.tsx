@@ -1,5 +1,4 @@
 import CaseStudyExplorer from "./CaseStudyExplorer";
-import HeroGraphic from "./HeroGraphic";
 import SkillsExplorer from "./SkillsExplorer";
 
 const metrics = [
@@ -38,8 +37,13 @@ const skillGroups = [
   },
   {
     title: "Tooling & CI/CD",
-    items: ["Jenkins", "GitHub Actions", "GitLab CI", "Git", "Docker", "Kubernetes", "Maven", "Postman", "Linux / Shell", "Jira", "AWS", "Claude", "Copilot", "LLM-based Tooling", "Agentic Workflows"],
+    items: ["Jenkins", "GitHub Actions", "GitLab CI", "Git", "Docker", "Kubernetes", "Maven", "Postman", "Linux / Shell", "Jira", "AWS"],
     summary: "I build around delivery systems, not outside them, so automation can run reliably where release decisions are actually made.",
+  },
+  {
+    title: "AI / LLM Tooling",
+    items: ["Claude", "Copilot", "LLM-based Tooling", "Agentic Workflows", "RAG / Retrieval-Augmented Generation"],
+    summary: "I use LLM tooling operationally, including building a RAG-based test generation system that grounds output in the team's real test suite instead of relying on generic zero-shot prompting.",
   },
   {
     title: "FinTech",
@@ -84,7 +88,7 @@ const caseStudies = [
     title: "Backend and API automation for distributed financial workflows",
     summary: "Reusable automation across REST, async, and queue-driven workflows for earlier signal on defects.",
     body:
-      "I built Python-based Robot Framework automation that validated REST, async, and queue-driven flows against a Java-centric platform, giving teams earlier signal on defects.",
+      "Built with Python-based Robot Framework against a Java-centric platform, where most off-the-shelf tooling assumed a single-language stack.",
     impact: "Shift-left coverage across backend and integration layers",
   },
   {
@@ -92,7 +96,7 @@ const caseStudies = [
     title: "Playwright-based UI automation for modern platform workflows",
     summary: "Playwright coverage for modern UI flows without turning browser automation into a maintenance burden.",
     body:
-      "I built Playwright coverage for modern platform workflows and integrated it into the broader automation strategy so UI validation stayed fast, maintainable, and production-relevant.",
+      "Folded into the broader automation strategy rather than run as a separate suite, so UI checks share fixtures, data, and CI signal with backend tests.",
     impact: "Modern UI coverage built around Playwright",
   },
   {
@@ -100,7 +104,7 @@ const caseStudies = [
     title: "Chaos-style resilience validation for async platform services",
     summary: "Fault-injection scenarios across services, daemons, and databases to validate restart paths, cascading dependency behavior, and post-recovery functional health.",
     body:
-      "I built fault-injection resilience tests that intentionally crash services, daemons, and databases, then track state-of-health recovery, cascading dependency impact, startup sequencing issues, and daemon-driven restoration behavior. Each scenario closes with scoped post-recovery functional integration checks to confirm the system is not only up, but behaving correctly.",
+      "Scoped around the failures unit and integration tests miss: what actually happens when a dependency dies mid-transaction, not just whether the happy path passes.",
     impact: "Component failure rate reduced from 25% to under 2%",
   },
   {
@@ -108,8 +112,16 @@ const caseStudies = [
     title: "Standalone performance testing rebuilt into a reproducible model",
     summary: "Rebuilt fragmented runs into reproducible performance workflows using observability-first analysis across logs, APM, and JVM signals.",
     body:
-      "I rebuilt fragmented performance testing from per-run SQL edits plus shell and Python scripts into a reproducible execution model, then used Grafana, OpenSearch/Elasticsearch APM logs, internal monitoring tools, and JVM thread insights from jstack to isolate bottlenecks across memory pressure, DB latency, and lock contention.",
+      "Replaced per-run SQL edits and one-off shell/Python scripts with a single reproducible execution model, adding jstack thread dumps to pin down lock contention specifically.",
     impact: "At least 3x faster test data generation and 40% shorter load execution",
+  },
+  {
+    eyebrow: "RAG Test Generation",
+    title: "RAG-based test generation for deterministic scenario authoring",
+    summary: "Hybrid retrieval with dynamic context injection over the team's existing test suite, replacing generic zero-shot LLM output with accurate, domain-aware scenarios.",
+    body:
+      "Outperformed naive codebase-wide search, which burned tokens on irrelevant context and still produced generic output. Deployed as an internal self-serve tool via FastAPI, so teams generate scenarios without waiting on manual authoring.",
+    impact: "Scenario authoring reduced from days to minutes",
   },
   {
     eyebrow: "Failure Analysis",
@@ -118,22 +130,6 @@ const caseStudies = [
     body:
       "I built a structured RCA workflow and an LLM-assisted investigation agent that uses historical failure patterns to suggest likely investigation paths, helping teams isolate whether failures are code, data, configuration, or environment driven.",
     impact: "Failure triage reduced from roughly a week to hours",
-  },
-  {
-    eyebrow: "Release Test Visibility",
-    title: "Release visibility dashboard for real-time test progress",
-    summary: "Internal tooling that unified Jenkins API and shared Excel data to provide real-time execution visibility for release stakeholders.",
-    body:
-      "I built a React and Node.js dashboard that pulled data from the Jenkins API and a shared Excel source to show real-time execution progress and clear release test visibility.",
-    impact: "Replaced countless manual processes through internal tooling",
-  },
-  {
-    eyebrow: "Platform Tooling",
-    title: "Configuration drift detection across environments",
-    summary: "Internal comparison tooling to catch environment drift before it becomes a release blocker.",
-    body:
-      "I built and own a configuration comparison tool that validates system state across environments and provides precise diffs, so teams can fix drift proactively instead of debugging downstream release failures.",
-    impact: "Earlier detection of environment-induced release risk",
   },
 ];
 
@@ -163,8 +159,8 @@ export default function Home() {
             GD
           </a>
           <div className="hidden items-center gap-6 text-muted sm:flex">
-            <a className="transition hover:text-ink" href="#work">Work</a>
             <a className="transition hover:text-ink" href="#systems">Systems</a>
+            <a className="transition hover:text-ink" href="#work">Work</a>
             <a className="transition hover:text-ink" href="#contact">Contact</a>
           </div>
           <a className="rounded-full bg-ink px-4 py-2 font-semibold text-white transition hover:bg-slateblue" href={links.resume}>
@@ -172,13 +168,13 @@ export default function Home() {
           </a>
         </nav>
 
-        <section id="top" className="grid gap-10 py-16 sm:py-20 lg:grid-cols-[1.08fr_0.92fr] lg:items-end lg:py-24">
+        <section id="top" className="grid gap-10 py-16 sm:py-20 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:py-24">
           <div>
             <p className="reveal text-sm font-semibold uppercase tracking-[0.28em] text-signal">
               Senior QA Engineer / SDET
             </p>
             <h1 className="reveal reveal-delay-1 mt-5 max-w-5xl font-display text-5xl font-semibold leading-[0.95] tracking-[-0.05em] sm:text-7xl lg:text-8xl">
-              I build quality systems for fintech platforms where failure is expensive.
+              I build AI-assisted quality systems for fintech platforms where failure is expensive.
             </h1>
             <p className="reveal reveal-delay-2 mt-7 max-w-3xl text-lg leading-8 text-muted sm:text-xl">
               Backend, API, and UI automation for distributed, event-driven financial workflows, focused on correctness under failure, load, and scale with strong CI quality gates and release readiness.
@@ -193,24 +189,19 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="reveal reveal-delay-2 space-y-4">
-            <div className="rounded-[2rem] border border-ink/10 bg-panel p-5 shadow-panel backdrop-blur">
-              <div className="rounded-[1.5rem] border border-ink/10 bg-ledger-grid bg-[length:34px_34px] p-5">
-                <div className="mb-6 flex items-center justify-between border-b border-ink/10 pb-4">
-                  <span className="text-xs font-bold uppercase tracking-[0.24em] text-muted">Quality Ledger</span>
-                  <span className="rounded-full bg-signal/10 px-3 py-1 text-xs font-bold text-signal">Live systems mindset</span>
-                </div>
-                <div className="space-y-4">
-                  {metrics.map((metric) => (
-                    <div key={metric.label} className="grid grid-cols-[5.5rem_1fr] gap-4 rounded-2xl border border-ink/10 bg-white/60 p-4">
-                      <strong className="font-display text-3xl leading-none">{metric.value}</strong>
-                      <span className="text-sm leading-5 text-muted">{metric.label}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+          <div className="reveal reveal-delay-2 rounded-[2rem] border border-ink/10 bg-[rgba(255,252,244,0.82)] bg-ledger-grid bg-[length:34px_34px] p-5 shadow-panel backdrop-blur sm:p-6">
+            <div className="mb-6 flex items-center justify-between border-b border-ink/10 pb-4">
+              <span className="text-xs font-bold uppercase tracking-[0.24em] text-muted">Quality Ledger</span>
+              <span className="rounded-full bg-signal/10 px-3 py-1 text-xs font-bold text-signal">Live systems mindset</span>
             </div>
-            <HeroGraphic />
+            <div className="space-y-4">
+              {metrics.map((metric) => (
+                <div key={metric.label} className="grid grid-cols-[5.5rem_1fr] gap-4 rounded-2xl border border-ink/10 bg-white/60 p-4">
+                  <strong className="font-display text-3xl leading-none">{metric.value}</strong>
+                  <span className="text-sm leading-5 text-muted">{metric.label}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -228,9 +219,14 @@ export default function Home() {
         </section>
 
         <section id="work" className="py-16 sm:py-20">
-          <div className="mb-8 max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.26em] text-signal">Selected case studies</p>
-            <h2 className="mt-3 font-display text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">Sanitized examples of enterprise work.</h2>
+          <div className="mb-10 flex flex-col justify-between gap-4 sm:flex-row sm:items-end sm:mb-12">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.26em] text-signal">Selected case studies</p>
+              <h2 className="mt-4 font-display text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">Sanitized examples of enterprise work.</h2>
+            </div>
+            <p className="max-w-xl text-muted">
+              Each one is a real production problem, condensed to scope, approach, and outcome.
+            </p>
           </div>
           <CaseStudyExplorer studies={caseStudies} />
         </section>
