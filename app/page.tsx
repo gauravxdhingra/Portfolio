@@ -1,5 +1,7 @@
+import Image from "next/image";
 import CaseStudyExplorer from "./CaseStudyExplorer";
 import SkillsExplorer from "./SkillsExplorer";
+import MobileNav from "./MobileNav";
 
 const metrics = [
   { value: "5", label: "years in fintech quality engineering" },
@@ -7,7 +9,6 @@ const metrics = [
   { value: "25+", label: "cross-functional teams supported" },
   { value: "30%", label: "release regression cycle reduction" },
   { value: "<1%", label: "nightly automation flake rate maintained" },
-  { value: "AI", label: "RAG-powered scenario generation, from days to minutes" },
 ];
 
 const skillGroups = [
@@ -77,6 +78,7 @@ const skillGroups = [
 
 const caseStudies = [
   {
+    slug: "quality-infrastructure",
     eyebrow: "Quality Infrastructure",
     title: "Quality ownership across 100+ distributed components",
     summary: "Shared quality infrastructure and standards spanning treasury, risk, settlements, and messaging workflows.",
@@ -85,6 +87,7 @@ const caseStudies = [
     impact: "One of 3 engineers accountable for platform-wide quality infrastructure",
   },
   {
+    slug: "rag-test-generation",
     eyebrow: "RAG Test Generation",
     title: "RAG-based test generation for deterministic scenario authoring",
     summary: "Hybrid retrieval with dynamic context injection over the team's existing test suite, replacing generic zero-shot LLM output with accurate, domain-aware scenarios.",
@@ -93,6 +96,7 @@ const caseStudies = [
     impact: "AI-powered (RAG) scenario authoring reduced from days to minutes",
   },
   {
+    slug: "ui-modernization",
     eyebrow: "UI Modernization",
     title: "Playwright-based UI automation for modern platform workflows",
     summary: "Playwright coverage for modern UI flows without turning browser automation into a maintenance burden.",
@@ -101,6 +105,7 @@ const caseStudies = [
     impact: "Modern UI coverage built around Playwright",
   },
   {
+    slug: "automation-architecture",
     eyebrow: "Automation Architecture",
     title: "Backend and API automation for distributed financial workflows",
     summary: "Reusable automation across REST, async, and queue-driven workflows for earlier signal on defects.",
@@ -109,6 +114,7 @@ const caseStudies = [
     impact: "Shift-left coverage across backend and integration layers",
   },
   {
+    slug: "reliability-engineering",
     eyebrow: "Reliability Engineering",
     title: "Chaos-style resilience validation for async platform services",
     summary: "Fault-injection scenarios across services, daemons, and databases to validate restart paths, cascading dependency behavior, and post-recovery functional health.",
@@ -117,6 +123,7 @@ const caseStudies = [
     impact: "Chaos-tested component failure rate reduced from 25% to under 2%",
   },
   {
+    slug: "performance",
     eyebrow: "Performance",
     title: "Standalone performance testing rebuilt into a reproducible model",
     summary: "Rebuilt fragmented runs into reproducible performance workflows using observability-first analysis across logs, APM, and JVM signals.",
@@ -125,6 +132,7 @@ const caseStudies = [
     impact: "At least 3x faster test data generation and 40% shorter load execution",
   },
   {
+    slug: "failure-analysis",
     eyebrow: "Failure Analysis",
     title: "Structured RCA with LLM-assisted triage",
     summary: "Root-cause workflows that reduce cross-team escalation loops and move failure triage from hours to minutes.",
@@ -151,31 +159,56 @@ function ArrowIcon() {
 
 export default function Home() {
   return (
-    <main className="relative isolate overflow-hidden px-5 py-6 text-ink sm:px-8 lg:px-12">
+    <main id="main-content" className="relative isolate overflow-hidden px-5 py-6 text-ink sm:px-8 lg:px-12">
       <div className="grain" />
       <div className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[46rem] w-[46rem] -translate-x-1/2 rounded-full border border-ink/10" />
       <div className="mx-auto max-w-7xl">
-        <nav className="reveal flex items-center justify-between rounded-full border border-ink/10 bg-white/45 px-5 py-3 text-sm shadow-sm backdrop-blur">
-          <a className="font-display text-lg font-semibold tracking-tight" href="#top" aria-label="Gaurav Dhingra home">
-            GD
+        <nav className="reveal relative z-30 flex items-center justify-between rounded-full border border-ink/10 bg-white/45 px-5 py-3 text-sm shadow-sm backdrop-blur">
+          <a className="flex items-center gap-2 font-display text-lg font-semibold tracking-tight" href="#top" aria-label="Gaurav Dhingra home">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-ink text-xs font-bold text-white">
+              GD
+            </span>
+            <span className="hidden sm:inline">Gaurav Dhingra</span>
           </a>
           <div className="hidden items-center gap-6 text-muted sm:flex">
             <a className="transition hover:text-ink" href="#systems">Systems</a>
             <a className="transition hover:text-ink" href="#work">Work</a>
             <a className="transition hover:text-ink" href="#contact">Contact</a>
           </div>
-          <a className="rounded-full bg-ink px-4 py-2 font-semibold text-white transition hover:bg-slateblue" href={links.resume}>
-            Resume
-          </a>
+          <div className="flex items-center gap-2">
+            <MobileNav
+              links={[
+                { href: "#systems", label: "Systems" },
+                { href: "#work", label: "Work" },
+                { href: "#contact", label: "Contact" },
+              ]}
+            />
+            <a className="rounded-full bg-ink px-4 py-2 font-semibold text-white transition hover:bg-slateblue" href={links.resume}>
+              Resume
+            </a>
+          </div>
         </nav>
 
         <section id="top" className="grid gap-10 py-16 sm:py-20 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:py-24">
           <div>
-            <p className="reveal text-sm font-semibold uppercase tracking-[0.28em] text-signal">
-              Senior QA Engineer / SDET
-            </p>
+            <div className="reveal flex items-center gap-3">
+              <Image
+                src="/Photo.png"
+                alt="Portrait of Gaurav Dhingra"
+                width={56}
+                height={56}
+                priority
+                className="h-14 w-14 rounded-full border border-ink/10 object-cover shadow-sm"
+              />
+              <div>
+                <p className="font-display text-base font-semibold leading-tight text-ink">Gaurav Dhingra</p>
+                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-signal">
+                  Senior QA Engineer / SDET
+                </p>
+              </div>
+            </div>
             <h1 className="reveal reveal-delay-1 mt-5 max-w-5xl font-display text-5xl font-semibold leading-[0.95] tracking-[-0.05em] sm:text-7xl lg:text-8xl">
-              I build AI-assisted quality systems for fintech platforms where failure is expensive.
+              I build AI-assisted quality systems for distributed, event-driven platforms where failure is expensive.
             </h1>
             <p className="reveal reveal-delay-2 mt-7 max-w-3xl text-lg leading-8 text-muted sm:text-xl">
               Backend, API, and UI automation for distributed, event-driven financial workflows, focused on correctness under failure, load, and scale with strong CI quality gates and release readiness.
@@ -256,6 +289,21 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <footer className="reveal flex flex-col items-center gap-2 border-t border-ink/10 py-8 text-center text-xs text-muted">
+          <p>
+            This site is tested with Playwright on every deploy |{" "}
+            <a
+              className="font-semibold text-signal transition hover:text-ink"
+              href="https://github.com/gauravxdhingra/Portfolio/actions/workflows/ci.yml"
+              rel="noreferrer"
+              target="_blank"
+            >
+              view pipeline
+            </a>
+          </p>
+          <p>© {new Date().getFullYear()} Gaurav Dhingra. Built with Next.js.</p>
+        </footer>
       </div>
     </main>
   );

@@ -28,16 +28,23 @@ export default function SkillsExplorer({ groups }: SkillsExplorerProps) {
     ? currentGroup.items.slice(0, COLLAPSED_LIMIT)
     : currentGroup.items;
 
+  const panelId = `skills-panel-${currentGroup.title.replace(/\s+/g, "-").toLowerCase()}`;
+
   return (
     <div className="rounded-[1.75rem] border border-ink/10 bg-white/50 p-4 shadow-sm backdrop-blur sm:p-6">
-      <div className="flex flex-wrap gap-2">
+      <div role="tablist" aria-label="Skill groups" className="flex flex-wrap gap-2">
         {groups.map((group) => {
           const isActive = group.title === currentGroup.title;
+          const tabId = `skills-tab-${group.title.replace(/\s+/g, "-").toLowerCase()}`;
 
           return (
             <button
               key={group.title}
               type="button"
+              id={tabId}
+              role="tab"
+              aria-selected={isActive}
+              aria-controls={panelId}
               onClick={() => {
                 setActiveGroup(group.title);
                 setExpanded(false);
@@ -54,7 +61,12 @@ export default function SkillsExplorer({ groups }: SkillsExplorerProps) {
         })}
       </div>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[0.34fr_0.66fr] lg:items-start">
+      <div
+        id={panelId}
+        role="tabpanel"
+        aria-labelledby={`skills-tab-${currentGroup.title.replace(/\s+/g, "-").toLowerCase()}`}
+        className="mt-6 grid gap-6 lg:grid-cols-[0.34fr_0.66fr] lg:items-start"
+      >
         <div className="rounded-[1.5rem] border border-ink/10 bg-ledger/70 p-5">
           <p className="text-xs font-bold uppercase tracking-[0.22em] text-muted">Current Focus</p>
           <h3 className="mt-3 font-display text-3xl font-semibold tracking-[-0.04em] text-ink">

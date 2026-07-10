@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 type CaseStudy = {
+  slug: string;
   eyebrow: string;
   title: string;
   summary: string;
@@ -69,26 +71,25 @@ function CaseStudyVisual({ eyebrow }: { eyebrow: string }) {
               playwright · e2e-suite.spec.ts
             </span>
             <span className="ml-auto rounded-full bg-signal/15 px-2 py-0.5 text-[9px] font-bold text-signal">
-              94% avg pass
+              Shared CI signal
             </span>
           </div>
           <div className="relative flex items-start justify-between px-1">
             <div className="absolute left-[12.5%] right-[12.5%] top-4 h-px bg-ink/15" />
-            {[
-              { step: "Login", pct: 100 },
-              { step: "Navigate", pct: 95 },
-              { step: "Action", pct: 92 },
-              { step: "Verify", pct: 88 },
-            ].map((item) => (
-              <div key={item.step} className="relative z-10 flex flex-1 flex-col items-center gap-2">
+            {["Login", "Navigate", "Action", "Verify"].map((step) => (
+              <div key={step} className="relative z-10 flex flex-1 flex-col items-center gap-2">
                 <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-signal/50 bg-signal/10 text-signal">
                   <CheckIcon />
                 </div>
-                <p className="text-[10px] font-semibold text-ink">{item.step}</p>
-                <p className="text-[9px] font-bold text-signal">{item.pct}%</p>
+                <p className="text-[10px] font-semibold text-ink">{step}</p>
               </div>
             ))}
           </div>
+        </div>
+        <div className="rounded-lg border border-ink/10 bg-white/60 p-3">
+          <p className="text-[11px] text-muted leading-relaxed">
+            Shares fixtures, data, and CI signal with the backend suite rather than running as an isolated UI layer.
+          </p>
         </div>
       </div>
     ),
@@ -176,18 +177,6 @@ function CaseStudyVisual({ eyebrow }: { eyebrow: string }) {
           <p className="text-[11px] text-muted leading-relaxed">
             Performance runs analyzed with Grafana, OpenSearch/Elasticsearch APM logs, internal monitoring tools, and JVM diagnostics.
           </p>
-        </div>
-        <div className="grid grid-cols-3 gap-2">
-          {[
-            { label: "Throughput", value: "Tracked", tone: "text-signal" },
-            { label: "p95", value: "Tracked", tone: "text-signal" },
-            { label: "p99", value: "Tracked", tone: "text-brass" },
-          ].map((metric) => (
-            <div key={metric.label} className="rounded-lg border border-ink/10 bg-white/60 p-3 text-center">
-              <p className="text-[10px] uppercase tracking-[0.12em] text-muted">{metric.label}</p>
-              <p className={`mt-1 text-sm font-bold ${metric.tone}`}>{metric.value}</p>
-            </div>
-          ))}
         </div>
       </div>
     ),
@@ -296,86 +285,133 @@ function CaseStudyVisual({ eyebrow }: { eyebrow: string }) {
   );
 }
 
-export default function CaseStudyExplorer({ studies }: CaseStudyExplorerProps) {
-  const [openEyebrow, setOpenEyebrow] = useState<string | null>(null);
-  const openStudy = studies.find((study) => study.eyebrow === openEyebrow) ?? null;
+function CaseStudyGrid({
+  studies,
+  onOpen,
+}: {
+  studies: CaseStudy[];
+  onOpen: (slug: string) => void;
+}) {
+  return (
+    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {studies.map((study, index) => {
+        const accent = index % 2 === 0 ? "signal" : "brass";
+
+        return (
+          <button
+            key={study.slug}
+            type="button"
+            onClick={() => onOpen(study.slug)}
+            className={`group flex flex-col gap-4 rounded-[1.5rem] border-t-4 border border-ink/10 bg-white/60 p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${
+              accent === "signal" ? "border-t-signal/50" : "border-t-brass/50"
+            }`}
+          >
+            <div className="flex items-center justify-between">
+              <span
+                className={`inline-flex h-7 w-7 items-center justify-center rounded-full text-[11px] font-bold ${
+                  accent === "signal" ? "bg-signal/15 text-signal" : "bg-brass/15 text-brass"
+                }`}
+              >
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-muted">
+                {study.eyebrow}
+              </p>
+            </div>
+
+            <p className="font-display text-2xl font-semibold leading-tight tracking-[-0.03em] text-ink">
+              {study.impact}
+            </p>
+
+            <p className="text-sm font-semibold leading-6 text-muted">
+              {study.title}
+            </p>
+
+            <span className="mt-auto self-start text-sm font-semibold text-signal transition group-hover:text-ink">
+              Details →
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+function CaseStudyExplorerInner({ studies }: CaseStudyExplorerProps) {
+  const searchParams = useSearchParams();
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const [openSlug, setOpenSlug] = useState<string | null>(() => searchParams.get("case"));
+  const openStudy = studies.find((study) => study.slug === openSlug) ?? null;
 
   useEffect(() => {
-    if (!openStudy) {
+    const onPopState = () => {
+      setOpenSlug(new URLSearchParams(window.location.search).get("case"));
+    };
+
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
+
+  useEffect(() => {
+    const dialogEl = dialogRef.current;
+    if (!dialogEl) {
       return;
     }
 
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setOpenEyebrow(null);
-      }
-    };
-
-    document.addEventListener("keydown", onKeyDown);
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = "";
-    };
+    if (openStudy && !dialogEl.open) {
+      dialogEl.showModal();
+      closeButtonRef.current?.focus();
+    } else if (!openStudy && dialogEl.open) {
+      dialogEl.close();
+    }
   }, [openStudy]);
+
+  const syncUrl = (slug: string | null) => {
+    const params = new URLSearchParams(window.location.search);
+    if (slug) {
+      params.set("case", slug);
+    } else {
+      params.delete("case");
+    }
+
+    const query = params.toString();
+    const hash = slug ? "#work" : "";
+    const url = `${window.location.pathname}${query ? `?${query}` : ""}${hash}`;
+    window.history.pushState(null, "", url);
+  };
+
+  const openCase = (slug: string) => {
+    setOpenSlug(slug);
+    syncUrl(slug);
+  };
+
+  const closeCase = () => {
+    setOpenSlug(null);
+    syncUrl(null);
+  };
 
   return (
     <>
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {studies.map((study, index) => {
-          const accent = index % 2 === 0 ? "signal" : "brass";
+      <CaseStudyGrid studies={studies} onOpen={openCase} />
 
-          return (
-            <button
-              key={study.eyebrow}
-              type="button"
-              onClick={() => setOpenEyebrow(study.eyebrow)}
-              className={`group flex flex-col gap-4 rounded-[1.5rem] border-t-4 border border-ink/10 bg-white/60 p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${
-                accent === "signal" ? "border-t-signal/50" : "border-t-brass/50"
-              }`}
-            >
-              <div className="flex items-center justify-between">
-                <span
-                  className={`inline-flex h-7 w-7 items-center justify-center rounded-full text-[11px] font-bold ${
-                    accent === "signal" ? "bg-signal/15 text-signal" : "bg-brass/15 text-brass"
-                  }`}
-                >
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-muted">
-                  {study.eyebrow}
-                </p>
-              </div>
-
-              <p className="font-display text-2xl font-semibold leading-tight tracking-[-0.03em] text-ink">
-                {study.impact}
-              </p>
-
-              <p className="text-sm font-semibold leading-6 text-muted">
-                {study.title}
-              </p>
-
-              <span className="mt-auto self-start text-sm font-semibold text-signal transition group-hover:text-ink">
-                Details →
-              </span>
-            </button>
-          );
-        })}
-      </div>
-
-      {openStudy && (
-        <div role="dialog" aria-modal="true" className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
-          <button
-            type="button"
-            aria-label="Close details"
-            className="absolute inset-0 bg-ink/50 backdrop-blur-sm"
-            onClick={() => setOpenEyebrow(null)}
-          />
+      <dialog
+        ref={dialogRef}
+        onClose={closeCase}
+        onClick={(event) => {
+          if (event.target === dialogRef.current) {
+            dialogRef.current?.close();
+          }
+        }}
+        aria-labelledby="case-study-title"
+        className="m-0 h-full max-h-none w-full max-w-none bg-transparent p-4 open:flex open:items-center open:justify-center backdrop:bg-ink/50 backdrop:backdrop-blur-sm sm:p-6"
+      >
+        {openStudy && (
           <div className="relative max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-[1.75rem] border border-ink/10 bg-white p-6 shadow-panel sm:p-8">
             <button
               type="button"
-              onClick={() => setOpenEyebrow(null)}
+              onClick={() => dialogRef.current?.close()}
+              ref={closeButtonRef}
               aria-label="Close details"
               className="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full border border-ink/10 text-muted transition hover:border-ink/30 hover:text-ink"
             >
@@ -385,7 +421,7 @@ export default function CaseStudyExplorer({ studies }: CaseStudyExplorerProps) {
             <p className="pr-10 text-xs font-bold uppercase tracking-[0.24em] text-signal">
               {openStudy.eyebrow}
             </p>
-            <h3 className="mt-3 max-w-xl font-display text-3xl font-semibold leading-tight tracking-[-0.04em] text-ink">
+            <h3 id="case-study-title" className="mt-3 max-w-xl font-display text-3xl font-semibold leading-tight tracking-[-0.04em] text-ink">
               {openStudy.title}
             </h3>
             <p className="mt-4 max-w-xl text-lg leading-8 text-muted">
@@ -403,8 +439,16 @@ export default function CaseStudyExplorer({ studies }: CaseStudyExplorerProps) {
               <p className="mt-2 leading-7 text-muted">{openStudy.body}</p>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </dialog>
     </>
+  );
+}
+
+export default function CaseStudyExplorer({ studies }: CaseStudyExplorerProps) {
+  return (
+    <Suspense fallback={<CaseStudyGrid studies={studies} onOpen={() => {}} />}>
+      <CaseStudyExplorerInner studies={studies} />
+    </Suspense>
   );
 }
