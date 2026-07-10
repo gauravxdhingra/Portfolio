@@ -2,6 +2,7 @@ import Image from "next/image";
 import CaseStudyExplorer from "./CaseStudyExplorer";
 import SkillsExplorer from "./SkillsExplorer";
 import MobileNav from "./MobileNav";
+import CiStatusBadge from "./CiStatusBadge";
 
 const metrics = [
   { value: "5", label: "years in fintech quality engineering" },
@@ -226,7 +227,7 @@ export default function Home() {
           <div className="reveal reveal-delay-2 rounded-[2rem] border border-ink/10 bg-[rgba(255,252,244,0.82)] bg-ledger-grid bg-[length:34px_34px] p-5 shadow-panel backdrop-blur sm:p-6">
             <div className="mb-6 flex items-center justify-between border-b border-ink/10 pb-4">
               <span className="text-xs font-bold uppercase tracking-[0.24em] text-muted">Quality Ledger</span>
-              <span className="rounded-full bg-signal/10 px-3 py-1 text-xs font-bold text-signal">Live systems mindset</span>
+              <CiStatusBadge />
             </div>
             <div className="space-y-4">
               {metrics.map((metric) => (
@@ -290,18 +291,23 @@ export default function Home() {
           </div>
         </section>
 
-        <footer className="reveal flex flex-col items-center gap-2 border-t border-ink/10 py-8 text-center text-xs text-muted">
-          <p>
-            This site is tested with Playwright on every deploy |{" "}
-            <a
-              className="font-semibold text-signal transition hover:text-ink"
-              href="https://github.com/gauravxdhingra/Portfolio/actions/workflows/ci.yml"
-              rel="noreferrer"
-              target="_blank"
-            >
-              view pipeline
-            </a>
+        <footer className="reveal flex flex-col items-center gap-3 border-t border-ink/10 py-8 text-center text-xs text-muted">
+          <p className="font-semibold text-ink">
+            This site is tested with Playwright through a CI/CD pipeline.
           </p>
+          <a
+            href="https://github.com/gauravxdhingra/Portfolio/actions/workflows/ci.yml"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="View CI pipeline status on GitHub Actions"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://github.com/gauravxdhingra/Portfolio/actions/workflows/ci.yml/badge.svg"
+              alt="Playwright CI status"
+              className="h-5 w-auto"
+            />
+          </a>
           <p>© {new Date().getFullYear()} Gaurav Dhingra. Built with Next.js.</p>
         </footer>
       </div>
